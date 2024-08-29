@@ -1389,24 +1389,23 @@
         },
         {
             "name": "ibex/crud-generator",
-            "version": "v2.1.1",
-            "version_normalized": "2.1.1.0",
+            "version": "v1.6",
+            "version_normalized": "1.6.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/awais-vteams/laravel-crud-generator.git",
-                "reference": "4a7859532ee89a87d6851df4afdfae39a365512b"
+                "reference": "3c9220d73d846f6553806e746886062e554c6102"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awais-vteams/laravel-crud-generator/zipball/4a7859532ee89a87d6851df4afdfae39a365512b",
-                "reference": "4a7859532ee89a87d6851df4afdfae39a365512b",
+                "url": "https://api.github.com/repos/awais-vteams/laravel-crud-generator/zipball/3c9220d73d846f6553806e746886062e554c6102",
+                "reference": "3c9220d73d846f6553806e746886062e554c6102",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^10.30|^11.0",
-                "php": "^8.2"
+                "laravel/framework": "^5.5|^6.20.42|^7.0|^8.0|^9.0|^10.0|^11.0"
             },
-            "time": "2024-06-11T04:27:58+00:00",
+            "time": "2024-03-17T04:37:32+00:00",
             "type": "library",
             "extra": {
                 "laravel": {
@@ -1431,20 +1430,18 @@
                     "email": "asargodha@gmail.com"
                 }
             ],
-            "description": "Laravel CRUD Generator",
+            "description": "Laravel Crud Generator",
             "keywords": [
-                "alpine js",
                 "bootstrap css",
                 "crud",
                 "crud generator",
                 "laravel",
                 "laravel crud generator",
-                "laravel package",
-                "tailwind css"
+                "laravel package"
             ],
             "support": {
                 "issues": "https://github.com/awais-vteams/laravel-crud-generator/issues",
-                "source": "https://github.com/awais-vteams/laravel-crud-generator/tree/v2.1.1"
+                "source": "https://github.com/awais-vteams/laravel-crud-generator/tree/v1.6"
             },
             "funding": [
                 {

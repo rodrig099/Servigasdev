@@ -2,32 +2,32 @@
 
 namespace Ibex\CrudGenerator\Commands;
 
-use Exception;
 use Ibex\CrudGenerator\ModelGenerator;
 use Illuminate\Console\Command;
-use Illuminate\Contracts\Console\PromptsForMissingInput;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
-use RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Process\Process;
 
 /**
  * Class GeneratorCommand.
  */
-abstract class GeneratorCommand extends Command implements PromptsForMissingInput
+abstract class GeneratorCommand extends Command
 {
-    protected Filesystem $files;
+    /**
+     * The filesystem instance.
+     *
+     * @var \Illuminate\Filesystem\Filesystem
+     */
+    protected $files;
 
     /**
      * Do not make these columns fillable in Model or views.
      *
      * @var array
      */
-    protected array $unwantedColumns = [
+    protected $unwantedColumns = [
         'id',
         'uuid',
         'ulid',
@@ -39,37 +39,66 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
         'deleted_at',
     ];
 
-    protected ?string $table = null;
+    /**
+     * Table name from argument.
+     *
+     * @var string
+     */
+    protected $table = null;
 
     /**
      * Formatted Class name from Table.
      *
-     * @var null|string
+     * @var string
      */
     protected $name = null;
 
-    private ?array $tableColumns = null;
+    /**
+     * Store the DB table columns.
+     *
+     * @var array
+     */
+    private $tableColumns = null;
 
-    protected string $modelNamespace = 'App\Models';
+    /**
+     * Model Namespace.
+     *
+     * @var string
+     */
+    protected $modelNamespace = 'App\Models';
 
-    protected string $controllerNamespace = 'App\Http\Controllers';
+    /**
+     * Controller Namespace.
+     *
+     * @var string
+     */
+    protected $controllerNamespace = 'App\Http\Controllers';
 
-    protected string $apiControllerNamespace = 'App\Http\Controllers\Api';
+    /**
+     * Request Namespace.
+     *
+     * @var string
+     */
+    protected $requestNamespace = 'App\Http\Requests';
 
-    protected string $resourceNamespace = 'App\Http\Resources';
+    /**
+     * Application Layout
+     *
+     * @var string
+     */
+    protected $layout = 'layouts.app';
 
-    protected string $livewireNamespace = 'App\Livewire';
-
-    protected string $requestNamespace = 'App\Http\Requests';
-
-    protected string $layout = 'layouts.app';
-
-    protected array $options = [];
+    /**
+     * Custom Options name
+     *
+     * @var array
+     */
+    protected $options = [];
 
     /**
      * Create a new controller creator command instance.
      *
-     * @param  Filesystem  $files
+     * @param  \Illuminate\Filesystem\Filesystem  $files
      *
      * @return void
      */
@@ -81,10 +110,6 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
         $this->unwantedColumns = config('crud.model.unwantedColumns', $this->unwantedColumns);
         $this->modelNamespace = config('crud.model.namespace', $this->modelNamespace);
         $this->controllerNamespace = config('crud.controller.namespace', $this->controllerNamespace);
-        $this->apiControllerNamespace = config('crud.controller.apiNamespace', $this->apiControllerNamespace);
-        $this->resourceNamespace = config('crud.resources.namespace', $this->resourceNamespace);
-        $this->livewireNamespace = config('crud.livewire.namespace', $this->livewireNamespace);
-        $this->requestNamespace = config('crud.request.namespace', $this->requestNamespace);
         $this->layout = config('crud.layout', $this->layout);
     }
 
@@ -93,21 +118,21 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return $this
      */
-    abstract protected function buildController(): static;
+    abstract protected function buildController();
 
     /**
      * Generate the Model.
      *
      * @return $this
      */
-    abstract protected function buildModel(): static;
+    abstract protected function buildModel();
 
     /**
      * Generate the views.
      *
      * @return $this
      */
-    abstract protected function buildViews(): static;
+    abstract protected function buildViews();
 
     /**
      * Build the directory if necessary.
@@ -116,7 +141,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function makeDirectory(string $path): string
+    protected function makeDirectory($path)
     {
         if (! $this->files->isDirectory(dirname($path))) {
             $this->files->makeDirectory(dirname($path), 0777, true, true);
@@ -131,9 +156,13 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      * @param $path
      * @param $content
      */
-    protected function write($path, $content): void
+    protected function write($path, $content)
     {
-        $this->makeDirectory($path);
+        $directory = $this->files->dirname($path);
+
+        if (! $this->files->isDirectory($directory)) {
+            $this->files->makeDirectory($directory, 0755, true);
+        }
 
         $this->files->put($path, $content);
     }
@@ -145,17 +174,17 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      * @param  boolean  $content
      *
      * @return string
-     * @throws FileNotFoundException
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     *
      */
-    protected function getStub(string $type, bool $content = true): string
+    protected function getStub($type, $content = true)
     {
         $stub_path = config('crud.stub_path', 'default');
-
-        if (blank($stub_path) || $stub_path == 'default') {
+        if ($stub_path == 'default') {
             $stub_path = __DIR__.'/../stubs/';
         }
 
-        $path = Str::finish($stub_path, '/')."$type.stub";
+        $path = Str::finish($stub_path, '/')."{$type}.stub";
 
         if (! $content) {
             return $path;
@@ -165,13 +194,18 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
     }
 
     /**
-     * @param  int  $no
+     * @param $no
      *
      * @return string
      */
-    private function _getSpace(int $no = 1): string
+    private function _getSpace($no = 1)
     {
-        return str_repeat("\t", $no);
+        $tabs = '';
+        for ($i = 0; $i < $no; $i++) {
+            $tabs .= "\t";
+        }
+
+        return $tabs;
     }
 
     /**
@@ -179,7 +213,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function _getControllerPath($name): string
+    protected function _getControllerPath($name)
     {
         return app_path($this->_getNamespacePath($this->controllerNamespace)."{$name}Controller.php");
     }
@@ -189,37 +223,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function _getApiControllerPath($name): string
-    {
-        return app_path($this->_getNamespacePath($this->apiControllerNamespace)."{$name}Controller.php");
-    }
-
-    /**
-     * @param $name
-     *
-     * @return string
-     */
-    protected function _getResourcePath($name): string
-    {
-        return app_path($this->_getNamespacePath($this->resourceNamespace)."{$name}Resource.php");
-    }
-
-    /**
-     * @param $name
-     *
-     * @return string
-     */
-    protected function _getLivewirePath($name): string
-    {
-        return app_path($this->_getNamespacePath($this->livewireNamespace)."{$name}.php");
-    }
-
-    /**
-     * @param $name
-     *
-     * @return string
-     */
-    protected function _getRequestPath($name): string
+    protected function _getRequestPath($name)
     {
         return app_path($this->_getNamespacePath($this->requestNamespace)."{$name}Request.php");
     }
@@ -229,9 +233,9 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function _getModelPath($name): string
+    protected function _getModelPath($name)
     {
-        return $this->makeDirectory(app_path($this->_getNamespacePath($this->modelNamespace)."$name.php"));
+        return $this->makeDirectory(app_path($this->_getNamespacePath($this->modelNamespace)."{$name}.php"));
     }
 
     /**
@@ -241,7 +245,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    private function _getNamespacePath($namespace): string
+    private function _getNamespacePath($namespace)
     {
         $str = Str::start(Str::finish(Str::after($namespace, 'App'), '\\'), '\\');
 
@@ -253,7 +257,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    private function _getLayoutPath(): string
+    private function _getLayoutPath()
     {
         return $this->makeDirectory(resource_path("/views/layouts/app.blade.php"));
     }
@@ -263,15 +267,11 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function _getViewPath($view): string
+    protected function _getViewPath($view)
     {
         $name = Str::kebab($this->name);
-        $path = match ($this->options['stack']) {
-            'livewire' => "/views/livewire/$name/$view.blade.php",
-            default => "/views/$name/$view.blade.php"
-        };
 
-        return $this->makeDirectory(resource_path($path));
+        return $this->makeDirectory(resource_path("/views/{$name}/{$view}.blade.php"));
     }
 
     /**
@@ -279,19 +279,15 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return array
      */
-    protected function buildReplacements(): array
+    protected function buildReplacements()
     {
         return [
             '{{layout}}' => $this->layout,
             '{{modelName}}' => $this->name,
             '{{modelTitle}}' => Str::title(Str::snake($this->name, ' ')),
-            '{{modelTitlePlural}}' => Str::title(Str::snake(Str::plural($this->name), ' ')),
             '{{modelNamespace}}' => $this->modelNamespace,
             '{{controllerNamespace}}' => $this->controllerNamespace,
-            '{{apiControllerNamespace}}' => $this->apiControllerNamespace,
-            '{{resourceNamespace}}' => $this->resourceNamespace,
             '{{requestNamespace}}' => $this->requestNamespace,
-            '{{livewireNamespace}}' => $this->livewireNamespace,
             '{{modelNamePluralLowerCase}}' => Str::camel(Str::plural($this->name)),
             '{{modelNamePluralUpperCase}}' => ucfirst(Str::plural($this->name)),
             '{{modelNameLowerCase}}' => Str::camel($this->name),
@@ -312,11 +308,11 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      * @param $column
      * @param  string  $type
      *
-     * @return string
-     * @throws FileNotFoundException
+     * @return mixed
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      *
      */
-    protected function getField($title, $column, string $type = 'form-field'): string
+    protected function getField($title, $column, $type = 'form-field')
     {
         $replace = array_merge($this->buildReplacements(), [
             '{{title}}' => $title,
@@ -325,60 +321,50 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
         ]);
 
         return str_replace(
-            array_keys($replace), array_values($replace), $this->getStub("views/{$this->options['stack']}/$type")
+            array_keys($replace), array_values($replace), $this->getStub("views/{$type}")
         );
     }
 
     /**
      * @param $title
      *
-     * @return string
+     * @return mixed
      */
-    protected function getHead($title): string
+    protected function getHead($title)
     {
         $replace = array_merge($this->buildReplacements(), [
             '{{title}}' => $title,
         ]);
 
-        $attr = match ($this->options['stack']) {
-            'tailwind', 'livewire' => 'scope="col" class="py-3 pl-4 pr-3 text-left text-xs font-semibold uppercase tracking-wide text-gray-500"',
-            default => ''
-        };
-
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            $this->_getSpace(9).'<th '.$attr.'>{{title}}</th>'."\n"
+            $this->_getSpace(10).'<th>{{title}}</th>'."\n"
         );
     }
 
     /**
      * @param $column
      *
-     * @return string
+     * @return mixed
      */
-    protected function getBody($column): string
+    protected function getBody($column)
     {
         $replace = array_merge($this->buildReplacements(), [
             '{{column}}' => $column,
         ]);
 
-        $attr = match ($this->options['stack']) {
-            'tailwind', 'livewire' => 'class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"',
-            default => ''
-        };
-
         return str_replace(
             array_keys($replace),
             array_values($replace),
-            $this->_getSpace(10).'<td '.$attr.'>{{ ${{modelNameLowerCase}}->{{column}} }}</td>'."\n"
+            $this->_getSpace(11).'<td>{{ ${{modelNameLowerCase}}->{{column}} }}</td>'."\n"
         );
     }
 
     /**
      * Make layout if not exists.
      *
-     * @throws Exception
+     * @throws \Exception
      */
     protected function buildLayout(): void
     {
@@ -386,33 +372,20 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
 
             $this->info('Creating Layout ...');
 
-            $uiPackage = match ($this->options['stack']) {
-                'tailwind', 'livewire', 'react', 'vue' => 'laravel/breeze',
-                default => 'laravel/ui'
-            };
-
-            if (! $this->requireComposerPackages([$uiPackage], true)) {
-                throw new Exception("Unable to install $uiPackage. Please install it manually");
+            if ($this->layout == 'layouts.app') {
+                $this->files->copy($this->getStub('layouts/app', false), $this->_getLayoutPath());
+            } else {
+                throw new \Exception("{$this->layout} layout not found!");
             }
-
-            $uiCommand = match ($this->options['stack']) {
-                'tailwind' => 'php artisan breeze:install blade',
-                'livewire' => 'php artisan breeze:install livewire',
-                'react' => 'php artisan breeze:install react',
-                'vue' => 'php artisan breeze:install vue',
-                default => 'php artisan ui bootstrap --auth'
-            };
-
-            $this->runCommands([$uiCommand]);
         }
     }
 
     /**
      * Get the DB Table columns.
      *
-     * @return array|null
+     * @return array
      */
-    protected function getColumns(): ?array
+    protected function getColumns()
     {
         if (empty($this->tableColumns)) {
             $this->tableColumns = Schema::getColumns($this->table);
@@ -424,7 +397,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
     /**
      * @return array
      */
-    protected function getFilteredColumns(): array
+    protected function getFilteredColumns()
     {
         $unwanted = $this->unwantedColumns;
         $columns = [];
@@ -443,22 +416,14 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return array
      */
-    protected function modelReplacements(): array
+    protected function modelReplacements()
     {
         $properties = '*';
-        $livewireFormProperties = '';
-        $livewireFormSetValues = '';
         $rulesArray = [];
         $softDeletesNamespace = $softDeletes = '';
-        $modelName = Str::camel($this->name);
 
         foreach ($this->getColumns() as $column) {
             $properties .= "\n * @property \${$column['name']}";
-
-            if (! in_array($column['name'], $this->unwantedColumns)) {
-                $livewireFormProperties .= "\n    public \${$column['name']} = '';";
-                $livewireFormSetValues .= "\n        \$this->{$column['name']} = \$this->{$modelName}Model->{$column['name']};";
-            }
 
             if (! $column['nullable']) {
                 $rulesArray[$column['name']] = ['required'];
@@ -488,7 +453,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
             $rulesArray = Arr::except($rulesArray, $this->unwantedColumns);
             // Make rulesArray
             foreach ($rulesArray as $col => $rule) {
-                $rules .= "\n\t\t\t'$col' => '".implode('|', $rule)."',";
+                $rules .= "\n\t\t\t'{$col}' => '".implode('|', $rule)."',";
             }
 
             return $rules;
@@ -496,6 +461,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
 
         $fillable = function () {
 
+            /** @var array $filterColumns Exclude the unwanted columns */
             $filterColumns = $this->getFilteredColumns();
 
             // Add quotes to the unwanted columns for fillable
@@ -518,8 +484,6 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
             '{{properties}}' => $properties,
             '{{softDeletesNamespace}}' => $softDeletesNamespace,
             '{{softDeletes}}' => $softDeletes,
-            '{{livewireFormProperties}}' => $livewireFormProperties,
-            '{{livewireFormSetValues}}' => $livewireFormSetValues,
         ];
     }
 
@@ -528,7 +492,7 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return string
      */
-    protected function getNameInput(): string
+    protected function getNameInput()
     {
         return trim($this->argument('name'));
     }
@@ -536,12 +500,15 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
     /**
      * Build the options
      *
-     * @return $this
+     * @return $this|array
      */
-    protected function buildOptions(): static
+    protected function buildOptions()
     {
-        $this->options['route'] = null;
-        $this->options['stack'] = $this->argument('stack');
+        $route = $this->option('route');
+
+        if (! empty($route)) {
+            $this->options['route'] = $route;
+        }
 
         return $this;
     }
@@ -551,60 +518,20 @@ abstract class GeneratorCommand extends Command implements PromptsForMissingInpu
      *
      * @return array
      */
-    protected function getArguments(): array
+    protected function getArguments()
     {
         return [
             ['name', InputArgument::REQUIRED, 'The name of the table'],
         ];
     }
 
-    protected function tableExists(): bool
+    /**
+     * Is Table exist in DB.
+     *
+     * @return mixed
+     */
+    protected function tableExists()
     {
         return Schema::hasTable($this->table);
-    }
-
-    /**
-     * Installs the given Composer Packages into the application.
-     *
-     * @param  array  $packages
-     * @param  bool  $asDev
-     * @return bool
-     */
-    protected function requireComposerPackages(array $packages, bool $asDev = false): bool
-    {
-        $command = array_merge(
-            ['composer', 'require'],
-            $packages,
-            $asDev ? ['--dev'] : [],
-        );
-
-        return (new Process($command, base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
-                ->setTimeout(null)
-                ->run(function ($type, $output) {
-                    $this->output->write($output);
-                }) === 0;
-    }
-
-    /**
-     * Run the given commands.
-     *
-     * @param  array  $commands
-     * @return void
-     */
-    protected function runCommands(array $commands): void
-    {
-        $process = Process::fromShellCommandline(implode(' && ', $commands), null, null, null, null);
-
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            try {
-                $process->setTty(true);
-            } catch (RuntimeException $e) {
-                $this->output->writeln('  <bg=yellow;fg=black> WARN </> '.$e->getMessage().PHP_EOL);
-            }
-        }
-
-        $process->run(function ($type, $line) {
-            $this->output->write('    '.$line);
-        });
     }
 }
