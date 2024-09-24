@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tiposolicitude;
 use App\Http\Requests\TiposolicitudeRequest;
+use App\Http\Controllers\Tiposolicitude\middleware;
+
 
 /**
  * Class TiposolicitudeController
@@ -11,6 +13,8 @@ use App\Http\Requests\TiposolicitudeRequest;
  */
 class TiposolicitudeController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      */

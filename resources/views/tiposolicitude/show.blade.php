@@ -15,7 +15,7 @@
                     <div class="card-body bg-white">
                         
                         <div class="form-group mb-2 mb20">
-                            <strong>Nombretipo:</strong>
+                            <strong>Nombre tipo:</strong>
                             {{ $tiposolicitude->nombreTipo }}
                         </div>
 

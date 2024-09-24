@@ -17,7 +17,7 @@
                             <div class="mt-sm-auto d-flex">
                                 <a href="{{ route('solicituds.create') }}"
                                     class="btn rounded-pill btn-primary me-2">Nueva solicitud</a>
-                                <a href="{{ route('solicituds.index') }}" class="btn rounded-pill btn-primary">Ver
+                                <a href="{{ route('solicitudes.index') }}" class="btn rounded-pill btn-primary">Ver
                                     solicitudes</a>
                             </div>
                         </div>
