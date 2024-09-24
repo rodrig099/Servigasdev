@@ -22,9 +22,10 @@ class SolicitudeRequest extends FormRequest
     public function rules(): array
     {
         return [
-			'tiposolicitudes_id' => 'required',
-			'descripcion' => 'string',
-			'estatus' => 'required|string',
+            'users_id' => '',
+            'tiposolicitudes_id' => 'required',
+            'descripcion' => 'string',
+            'estatus' => 'required|string',
         ];
     }
 }
