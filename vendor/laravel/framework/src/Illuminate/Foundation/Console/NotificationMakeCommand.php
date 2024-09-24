@@ -4,7 +4,6 @@ namespace Illuminate\Foundation\Console;
 
 use Illuminate\Console\Concerns\CreatesMatchingTest;
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -144,13 +143,7 @@ class NotificationMakeCommand extends GeneratorCommand
         $wantsMarkdownView = confirm('Would you like to create a markdown view?');
 
         if ($wantsMarkdownView) {
-            $defaultMarkdownView = collect(explode('/', str_replace('\\', '/', $this->argument('name'))))
-                ->map(fn ($path) => Str::kebab($path))
-                ->prepend('mail')
-                ->implode('.');
-
-            $markdownView = text('What should the markdown view be named?', default: $defaultMarkdownView);
-
+            $markdownView = text('What should the markdown view be named?', 'E.g. invoice-paid');
             $input->setOption('markdown', $markdownView);
         }
     }

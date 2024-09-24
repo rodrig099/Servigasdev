@@ -2,7 +2,6 @@
 
 namespace Illuminate\Auth\Access;
 
-use BackedEnum;
 use Closure;
 use Exception;
 use Illuminate\Auth\Access\Events\GateEvaluated;
@@ -192,7 +191,7 @@ class Gate implements GateContract
     /**
      * Define a new ability.
      *
-     * @param  \BackedEnum|string  $ability
+     * @param  string  $ability
      * @param  callable|array|string  $callback
      * @return $this
      *
@@ -200,8 +199,6 @@ class Gate implements GateContract
      */
     public function define($ability, $callback)
     {
-        $ability = $ability instanceof BackedEnum ? $ability->value : $ability;
-
         if (is_array($callback) && isset($callback[0]) && is_string($callback[0])) {
             $callback = $callback[0].'@'.$callback[1];
         }
@@ -323,7 +320,7 @@ class Gate implements GateContract
     /**
      * Determine if all of the given abilities should be granted for the current user.
      *
-     * @param  iterable|\BackedEnum|string  $ability
+     * @param  iterable|string  $ability
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -335,7 +332,7 @@ class Gate implements GateContract
     /**
      * Determine if any of the given abilities should be denied for the current user.
      *
-     * @param  iterable|\BackedEnum|string  $ability
+     * @param  iterable|string  $ability
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -347,7 +344,7 @@ class Gate implements GateContract
     /**
      * Determine if all of the given abilities should be granted for the current user.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -361,7 +358,7 @@ class Gate implements GateContract
     /**
      * Determine if any one of the given abilities should be granted for the current user.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -373,7 +370,7 @@ class Gate implements GateContract
     /**
      * Determine if all of the given abilities should be denied for the current user.
      *
-     * @param  iterable|\BackedEnum|string  $abilities
+     * @param  iterable|string  $abilities
      * @param  array|mixed  $arguments
      * @return bool
      */
@@ -385,7 +382,7 @@ class Gate implements GateContract
     /**
      * Determine if the given ability should be granted for the current user.
      *
-     * @param  \BackedEnum|string  $ability
+     * @param  string  $ability
      * @param  array|mixed  $arguments
      * @return \Illuminate\Auth\Access\Response
      *
@@ -399,14 +396,12 @@ class Gate implements GateContract
     /**
      * Inspect the user for the given ability.
      *
-     * @param  \BackedEnum|string  $ability
+     * @param  string  $ability
      * @param  array|mixed  $arguments
      * @return \Illuminate\Auth\Access\Response
      */
     public function inspect($ability, $arguments = [])
     {
-        $ability = $ability instanceof BackedEnum ? $ability->value : $ability;
-
         try {
             $result = $this->raw($ability, $arguments);
 

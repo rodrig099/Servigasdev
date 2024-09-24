@@ -283,7 +283,7 @@ final class NamePrettifier
                 }
             }
 
-            $providedData['$' . $parameter->getName()] = str_replace('$', '\\$', $value);
+            $providedData['$' . $parameter->getName()] = $value;
         }
 
         if ($colorize) {
