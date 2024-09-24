@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Solicitude;
 use App\Models\Tiposolicitude;
-use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Requests\SolicitudeRequest;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class SolicitudeController
@@ -15,22 +16,27 @@ use Illuminate\View\View;
  */
 class SolicitudeController extends Controller
 {
-    public function card()
-    {
-        $solicitudCount = Solicitude::count(); // Contar los registros
-        return view('dashboard', compact('solicitudCount')); // Pasar el conteo a la vista
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request): View
+    public function index()
     {
-        // Cargar las solicitudes junto con su tipo de solicitud usando `with`
-        $solicituds = Solicitude::with('tiposolicitude')->paginate();
-        return view('solicitude.index', compact('solicituds'))
-            ->with('i', ($request->input('page', 1) - 1) * $solicituds->perPage());
-    }
 
+        $user = Auth::user();
+
+        if ($user->hasRole('Admin') || $user->hasRole('Tecnico')) {
+
+            $solicitudes = Solicitude::orderByRaw("FIELD(estatus, 'pendiente') DESC")->paginate();
+        } else {
+
+            $solicitudes = Solicitude::where('users_id', $user->id)
+                ->orderByRaw("FIELD(estatus, 'pendiente', 'en proceso') DESC")
+                ->paginate();
+        }
+
+        return view('solicitude.index', compact('solicitudes'))
+            ->with('i', (request()->input('page', 1) - 1) * $solicitudes->perPage());
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -39,7 +45,10 @@ class SolicitudeController extends Controller
     {
         $solicitude = new Solicitude();
         $tiposolicitude = Tiposolicitude::all('nombreTipo', 'id');
-        return view('solicitude.create', compact('solicitude', 'tiposolicitude'));
+
+        $user = User::all('name', 'id');
+
+        return view('solicitude.create', compact('solicitude', 'tiposolicitude', 'user'));
     }
 
     /**
