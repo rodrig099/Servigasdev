@@ -8,11 +8,11 @@
                             <span class="card-title">Crear Tipo de solicitud</span>
                         </div>
                         <div class="card-body bg-white">
-                            <form method="POST" action="{{ route('tiposolicitudes.store') }}" role="form"
+                            <form method="POST" action="{{ route('users.store') }}" role="form"
                                 enctype="multipart/form-data">
                                 @csrf
 
-                                @include('tiposolicitude.form')
+                                @include('user.formCreate')
 
                             </form>
                         </div>
