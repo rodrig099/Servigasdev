@@ -114,23 +114,23 @@
                     @hasrole('Admin')
                         <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
                             <a href="{{ url('usuarios') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-user"></i>
-                                <div data-i18n="Analytics">Usuarios</div>
+                                <i class="menu-icon tf-icons bx bx-id-card"></i>
+                                <div data-i18n="Analytics">Roles y Permisos</div>
                             </a>
                         </li>
                     @endhasrole
 
-                   
+
                         <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}} {{ request()->is('solicitudes/create') ? 'active' : ''}}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon tf-icons bx bx-edit"></i>
                                 <div data-i18n="Layouts">Solicitudes</div>
                             </a>
-                            
-                    
+
+
 
                         <ul class="menu-sub">
-                       
+
                             @hasrole('Admin')
                                 <li class="menu-item {{ request()->is('tiposolicitudes') ? 'active' : ''}}">
                                     <a href="{{ url('tiposolicitudes') }}" class="menu-link">
@@ -138,7 +138,7 @@
                                     </a>
                                 </li>
                             @endhasrole
-                            
+
                             @hasanyrole('Admin|Usuario')
                                 <li class="menu-item {{ request()->is('solicitudes/create') ? 'active' : ''}}">
                                     <a href="{{ url('solicitudes/create') }}" class="menu-link">
@@ -188,42 +188,6 @@
                         </a>
                     </li>
                     @endhasanyrole
-
-                    <!-- Layouts -->
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-layout"></i>
-                            <div data-i18n="Layouts">Layouts</div>
-                        </a>
-
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="layouts-without-menu.html" class="menu-link">
-                                    <div data-i18n="Without menu">Without menu</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-without-navbar.html" class="menu-link">
-                                    <div data-i18n="Without navbar">Without navbar</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-container.html" class="menu-link">
-                                    <div data-i18n="Container">Container</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-fluid.html" class="menu-link">
-                                    <div data-i18n="Fluid">Fluid</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="layouts-blank.html" class="menu-link">
-                                    <div data-i18n="Blank">Blank</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
             </aside>
             <!-- / Menu -->

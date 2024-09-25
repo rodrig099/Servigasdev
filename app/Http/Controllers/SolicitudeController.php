@@ -100,4 +100,10 @@ class SolicitudeController extends Controller
         return redirect()->route('solicitudes.index')
             ->with('success', 'Solicitude deleted successfully');
     }
+
+    public function card()
+    {
+        $solicitudCount = Solicitude::count(); // Contar los registros
+        return view('dashboard', compact('solicitudCount')); // Pasar el conteo a la vista
+    }
 }

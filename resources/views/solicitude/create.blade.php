@@ -4,11 +4,9 @@
             <div class="row flex-grow-1">
                 <div class="col-xl d-flex flex-column">
                     <div class="card flex-grow-1 d-flex flex-column">
-
-                        <div class="card-default">
-                            <div class="card-header">
-                                <span class="card-title">{{ __('Create') }} Solicitude</span>
-                            </div>
+                        <div class="card-header">
+                            <span class="card-title">Crear solicitud</span>
+                        </div>
                             <div class="card-body bg-white">
                                 <form method="POST" action="{{ route('solicitudes.store') }}" role="form"
                                     enctype="multipart/form-data">

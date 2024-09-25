@@ -4,7 +4,7 @@
             <div class="col-xl d-flex flex-column">
                 <div class="card flex-grow-1 d-flex flex-column">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5>Solicitudes</h5>
+                        <h5>Tipo de solicitudes</h5>
                         <div>
                             <a href="{{ route('tiposolicitudes.create') }}" class="btn btn-primary btn">
                                 Crear
