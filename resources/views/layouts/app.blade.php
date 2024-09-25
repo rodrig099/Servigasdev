@@ -102,59 +102,92 @@
 
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : ''}}">
-                        <a href="{{ route('dashboard') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
-                        </a>
-                    </li>
+                    @hasanyrole('Admin|Usuario')
+                        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : ''}}">
+                            <a href="{{ route('dashboard') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                <div data-i18n="Analytics">Dashboard</div>
+                            </a>
+                        </li>
+                    @endhasanyrole
 
-                    <li class="menu-item {{ request()->is('solicituds') ? 'active' : ''}} {{ request()->is('solicituds/create') ? 'active' : ''}}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-edit"></i>
-                            <div data-i18n="Layouts">Solicitudes</div>
-                        </a>
+                    @hasrole('Admin')
+                        <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
+                            <a href="{{ url('usuarios') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-user"></i>
+                                <div data-i18n="Analytics">Usuarios</div>
+                            </a>
+                        </li>
+                    @endhasrole
+
+                   
+                        <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}} {{ request()->is('solicitudes/create') ? 'active' : ''}}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons bx bx-edit"></i>
+                                <div data-i18n="Layouts">Solicitudes</div>
+                            </a>
+                            
+                    
 
                         <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('solicituds/create') ? 'active' : ''}}">
-                                <a href="{{ url('solicituds/create') }}" class="menu-link">
-                                    <div data-i18n="Without menu">Nueva solicitud</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('solicituds') ? 'active' : ''}}">
-                                <a href="{{ url('solicituds') }}" class="menu-link">
-                                    <div data-i18n="Without navbar">Mis solicitudes</div>
-                                </a>
-                            </li>
+                       
+                            @hasrole('Admin')
+                                <li class="menu-item {{ request()->is('tiposolicitudes') ? 'active' : ''}}">
+                                    <a href="{{ url('tiposolicitudes') }}" class="menu-link">
+                                        <div data-i18n="Without menu">Tipo de Solicitud</div>
+                                    </a>
+                                </li>
+                            @endhasrole
+                            
+                            @hasanyrole('Admin|Usuario')
+                                <li class="menu-item {{ request()->is('solicitudes/create') ? 'active' : ''}}">
+                                    <a href="{{ url('solicitudes/create') }}" class="menu-link">
+                                        <div data-i18n="Without menu">Nueva solicitud</div>
+                                    </a>
+                                </li>
+                            @endhasanyrole
+
+                            @hasanyrole('Admin|Usuario|Tecnico')
+                                <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}}">
+                                    <a href="{{ url('solicitudes') }}" class="menu-link">
+                                        <div data-i18n="Without navbar">Mis solicitudes</div>
+                                    </a>
+                                </li>
+                            @endhasanyrole
+
                         </ul>
                     </li>
 
-                    <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}} {{ request()->is('cotizaciones') ? 'active' : ''}}">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-archive"></i>
-                            <div data-i18n="Layouts">Facturación</div>
-                        </a>
+                    @hasrole('Admin')
+                        <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}} {{ request()->is('cotizaciones') ? 'active' : ''}}">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                <i class="menu-icon tf-icons bx bx-archive"></i>
+                                <div data-i18n="Layouts">Facturación</div>
+                            </a>
 
-                        <ul class="menu-sub">
-                            <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}}">
-                                <a href="{{ url('facturas') }}" class="menu-link">
-                                    <div data-i18n="Without menu">Facturas</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : ''}}">
-                                <a href="{{ url('cotizaciones') }}" class="menu-link">
-                                    <div data-i18n="Without navbar">Cotizaciones</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                            <ul class="menu-sub">
+                                <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}}">
+                                    <a href="{{ url('facturas') }}" class="menu-link">
+                                        <div data-i18n="Without menu">Facturas</div>
+                                    </a>
+                                </li>
+                                <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : ''}}">
+                                    <a href="{{ url('cotizaciones') }}" class="menu-link">
+                                        <div data-i18n="Without navbar">Cotizaciones</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endhasrole
 
+                    @hasanyrole('Admin|Usuario|Tecnico')
                     <li class="menu-item {{ request()->is('user/profile') ? 'active' : ''}}">
                         <a href="{{ url('user/profile') }}" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="Analytics">Perfil</div>
                         </a>
                     </li>
+                    @endhasanyrole
 
                     <!-- Layouts -->
                     <li class="menu-item">

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Class Solicitude
  *
  * @property $id
+ * @property $users_id
  * @property $tiposolicitudes_id
  * @property $descripcion
  * @property $estatus
@@ -20,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Solicitude extends Model
 {
-    
+
 
     protected $perPage = 20;
 
@@ -29,7 +30,7 @@ class Solicitude extends Model
      *
      * @var array
      */
-    protected $fillable = ['tiposolicitudes_id', 'descripcion', 'estatus'];
+    protected $fillable = ['users_id', 'tiposolicitudes_id', 'descripcion', 'estatus'];
 
 
     /**
@@ -39,6 +40,11 @@ class Solicitude extends Model
     {
         return $this->belongsTo(\App\Models\Tiposolicitude::class, 'tiposolicitudes_id', 'id');
     }
-    
+
+    public function User()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'users_id', 'id');
+    }
+
 
 }

@@ -10,11 +10,14 @@
                                 {{ __('Solicitude') }}
                             </span>
 
-                             <div class="float-right">
+                        @hasanyrole('Admin|Usuario')
+                            <div class="float-right">
                                 <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn-sm float-right"  data-placement="left">
-                                  {{ __('Create New') }}
+                                {{ __('Crear Solicitud') }}
                                 </a>
-                              </div>
+                            </div>
+                        @endhasanyrole
+
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -29,7 +32,10 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
+
+                                        @hasanyrole('Admin|Tecnico')
+                                        <th>Usuario</th>
+                                        @endhasanyrole
 										<th>Tiposolicitudes Id</th>
 										<th>Descripcion</th>
 										<th>Estatus</th>
@@ -41,19 +47,24 @@
                                     @foreach ($solicitudes as $solicitude)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
+                                            @hasanyrole('Admin|Tecnico')
+                                            <td>{{ $solicitude->user->name }}</td>
+                                            @endhasanyrole
 											<td>{{ $solicitude->tiposolicitude->nombreTipo }}</td>
 											<td>{{ $solicitude->descripcion }}</td>
 											<td>{{ $solicitude->estatus }}</td>
-
+                                            
                                             <td>
                                                 <form action="{{ route('solicitudes.destroy',$solicitude->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('solicitudes.show',$solicitude->id) }}"><i class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
                                                     <a class="btn btn-sm btn-success" href="{{ route('solicitudes.edit',$solicitude->id) }}"><i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
+                                                       
+                                                    @hasanyrole('Admin|Usuario')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                    @endhasanyrole
+                                                </form>   
                                             </td>
                                         </tr>
                                     @endforeach

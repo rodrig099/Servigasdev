@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Solicitude;
 use App\Models\Tiposolicitude;
+use App\Models\User;
 use App\Http\Requests\SolicitudeRequest;
+
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class SolicitudeController
@@ -17,7 +21,18 @@ class SolicitudeController extends Controller
      */
     public function index()
     {
-        $solicitudes = Solicitude::paginate();
+
+        $user = Auth::user();
+
+        if ($user->hasRole('Admin') || $user->hasRole('Tecnico')) {
+
+            $solicitudes = Solicitude::orderByRaw("FIELD(estatus, 'pendiente') DESC")->paginate();
+        } else {
+
+            $solicitudes = Solicitude::where('users_id', $user->id)
+                ->orderByRaw("FIELD(estatus, 'pendiente', 'en proceso') DESC")
+                ->paginate();
+        }
 
         return view('solicitude.index', compact('solicitudes'))
             ->with('i', (request()->input('page', 1) - 1) * $solicitudes->perPage());
@@ -30,7 +45,10 @@ class SolicitudeController extends Controller
     {
         $solicitude = new Solicitude();
         $tiposolicitude = Tiposolicitude::all('nombreTipo', 'id');
-        return view('solicitude.create', compact('solicitude', 'tiposolicitude'));
+
+        $user = User::all('name', 'id');
+
+        return view('solicitude.create', compact('solicitude', 'tiposolicitude', 'user'));
     }
 
     /**

@@ -9,14 +9,19 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+
+
 
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
 
     /**
      * The attributes that are mass assignable.
@@ -62,4 +67,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function User()
+    {
+        return $this->hasMany(\App\Models\Solicitude::class, 'id', 'users_id');
+    }
+
 }
