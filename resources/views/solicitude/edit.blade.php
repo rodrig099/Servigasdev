@@ -21,7 +21,7 @@
                                 {{ method_field('PATCH') }}
                                 @csrf
 
-                                @include('solicitude.form')
+                                @include('solicitude.form-edit')
 
                             </form>
                         </div>

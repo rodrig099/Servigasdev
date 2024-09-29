@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\SolicitudeController;
 use App\Http\Controllers\TiposolicitudeController;
 use App\Http\Controllers\UsuarioController;
@@ -22,6 +22,7 @@ Route::middleware([
     Route::get('/solicitude', function () {
         return view('solicitude.show');
     })->name('solicitude');
+    Route::resource('facturas', FacturaController::class);
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
     Route::resource('tiposolicitudes', TiposolicitudeController::class);

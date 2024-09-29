@@ -13,8 +13,8 @@ class CreateFacturaDetallesTable extends Migration
             $table->foreignId('factura_id')->constrained('facturas')->onDelete('cascade');
             $table->integer('cantidad');
             $table->string('descripcion');
-            $table->decimal('precio_unitario');
-            $table->decimal('precio_total');
+            $table->bigInteger('precio_unitario');
+            $table->bigInteger('precio_total');
             $table->timestamps();
         });
     }

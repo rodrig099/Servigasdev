@@ -5,17 +5,12 @@
                 <div class="card flex-grow-1 d-flex flex-column">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5>Solicitudes</h5>
-
-                        @hasanyrole('Admin|Usuario')
-                            <div class="float-right">
-                                <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn">
-                                    Crear
-                                </a>
-                            </div>
-                        @endhasanyrole
-
+                        <div>
+                            <a href="{{ route('solicitudes.create') }}" class="btn btn-primary btn">
+                                Crear
+                            </a>
+                        </div>
                     </div>
-
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
@@ -33,7 +28,7 @@
                                     @endhasanyrole
                                     <th>Tiposolicitudes Id</th>
                                     <th>Descripcion</th>
-                                    <th>Estatus</th>
+                                    <th>Estado</th>
 
                                     <th></th>
                                 </tr>
@@ -47,25 +42,46 @@
                                         @endhasanyrole
                                         <td>{{ $solicitude->tiposolicitude->nombreTipo }}</td>
                                         <td>{{ $solicitude->descripcion }}</td>
-                                        <td>{{ $solicitude->estatus }}</td>
+                                        <td>
+                                            <span class="badge
+                                            @switch($solicitude->estatus)
+                                                @case('PENDIENTE') bg-label-danger
+                                                @break
+                                                @case('EN PROCESO') bg-label-warning
+                                                @break
+                                                @case('FINALIZADA') bg-label-success
+                                                @break
+                                                @default bg-label-primary
+                                            @endswitch me-1">
+                                                {{ $solicitude->estatus}}
+                                            </span>
+                                        </td>
 
                                         <td>
-                                            <form action="{{ route('solicitudes.destroy', $solicitude->id) }}"
-                                                method="POST">
-                                                <a class="btn btn-sm btn-primary "
-                                                    href="{{ route('solicitudes.show', $solicitude->id) }}"><i
-                                                        class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                <a class="btn btn-sm btn-success"
-                                                    href="{{ route('solicitudes.edit', $solicitude->id) }}"><i
-                                                        class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-
-                                                @hasanyrole('Admin|Usuario')
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                @endhasanyrole
-                                            </form>
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('solicitudes.show', $solicitude->id) }}">
+                                                        <i class="bx bx-show-alt me-1"></i> Ver
+                                                    </a>
+                                                    <a class="dropdown-item"
+                                                        href="{{ route('solicitudes.edit', $solicitude->id) }}">
+                                                        <i class="bx bx-edit-alt me-1"></i> Editar
+                                                    </a>
+                                                    @hasanyrole('Admin|Usuario')
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <a class="dropdown-item" href="javascript:void(0);"
+                                                            onclick="event.preventDefault(); showDeleteModal({{ $solicitude->id }});">
+                                                            <i class="bx bx-trash me-1"></i> Eliminar
+                                                        </a>
+                                                    @endhasanyrole
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -74,6 +90,48 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmación de eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ¿Estás seguro de que quieres eliminar este registro?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function showDeleteModal(solicitudeId) {
+                    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {});
+                    document.getElementById('confirmDelete').setAttribute('data-solicitude-id', solicitudeId);
+                    deleteModal.show();
+                }
+
+                document.getElementById('confirmDelete').addEventListener('click', function() {
+                    const solicitudeId = this.getAttribute('data-solicitude-id');
+                    const form = document.createElement('form');
+                    form.setAttribute('method', 'POST');
+                    form.setAttribute('action', `/solicitudes/${solicitudeId}`);
+                    form.innerHTML = `
+                @csrf
+                @method('DELETE')
+            `;
+                    document.body.appendChild(form);
+                    form.submit();
+                });
+            </script>
         </div>
     </div>
     {!! $solicitudes->links() !!}

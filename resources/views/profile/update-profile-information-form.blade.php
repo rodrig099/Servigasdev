@@ -67,6 +67,14 @@
             <x-input-error for="apellidos" class="mt-2" />
         </div>
 
+        <!-- cedula -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="cedula" value="{{ __('Cédula') }}" />
+            <x-input id="cedula" type="number" class="mt-1 block w-full" wire:model="state.cedula" required
+                autocomplete="cedula" />
+            <x-input-error for="cedula" class="mt-2" />
+        </div>
+
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
@@ -97,7 +105,7 @@
         <!-- telefono -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="telefono" value="{{ __('Phone') }}" />
-            <x-input id="telefono" type="text" class="mt-1 block w-full" wire:model="state.telefono" required
+            <x-input id="telefono" type="number" class="mt-1 block w-full" wire:model="state.telefono" required
                 autocomplete="telefono" />
             <x-input-error for="telefono" class="mt-2" />
         </div>

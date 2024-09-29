@@ -28,6 +28,7 @@
        <div class="form-group mb-2">
             <label for="estatus" class="form-label">{{ __('Estatus') }}</label>
             <select class="form-select @error('estatus') is-invalid @enderror" name="estatus" id="estatus">
+                <option value="{{ $solicitude->estatus }}" selected>{{ $solicitude->estatus }}</option>
                 <option value="PENDIENTE" {{ old('estatus', $solicitude?->solicitude) == 'PENDIENTE' ? 'selected' : '' }}>PENDIENTE</option>
                 <option value="EN PROCESO" {{ old('estatus', $solicitude?->solicitude) == 'EN PROCESO' ? 'selected' : '' }}>EN PROCESO</option>
                 <option value="FINALIZADA" {{ old('estatus', $solicitude?->solicitude) == 'FINALIZADA' ? 'selected' : '' }}>FINALIZADA</option>

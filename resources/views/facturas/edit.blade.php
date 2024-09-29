@@ -135,43 +135,6 @@
                                 </form>
                             </div>
                         </div>
-
-                        <!-- Modal for new user -->
-                        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalCenterTitle">Register New User</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label" for="modal-fullname">Name</label>
-                                                <input type="text" class="form-control" id="modal-fullname"
-                                                    placeholder="Name" />
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label" for="modal-address">Address</label>
-                                                <input type="text" class="form-control" id="modal-address"
-                                                    placeholder="Address" />
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label" for="modal-city">City</label>
-                                                <input type="text" class="form-control" id="modal-city"
-                                                    placeholder="City" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-danger"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-success" id="save-modal">Save</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <script>
@@ -179,75 +142,52 @@
                             const container = document.getElementById('details-container');
                             const count = container.children.length;
                             if (count >= 10) {
-                                alert('Cannot add more details.');
+                                alert('No se pueden agregar más detalles.');
                                 return;
                             }
 
                             const newDetail = document.createElement('div');
-                            newDetail.className = 'row padding-1 p-1';
+                            newDetail.className = 'row mb-3';
                             newDetail.innerHTML = `
-                        <div class="col-md-3">
-                            <div class="form-group mb-2 mb20">
-                                <input type="number" name="detalles[${count}][cantidad]" class="form-control" placeholder="Quantity" required />
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group mb-2 mb20">
-                                <input type="text" name="detalles[${count}][descripcion]" class="form-control" placeholder="Description" required />
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group mb-2 mb20">
-                                <input type="number" name="detalles[${count}][precio_unitario]" class="form-control" placeholder="Unit Price" required />
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group mb-2 mb20">
-                                <input type="text" name="detalles[${count}][precio_total]" class="form-control" placeholder="Total Price" disabled />
-                            </div>
-                        </div>
-                    `;
+                                <div class="col-md-3">
+                                    <input type="number" name="detalles[${count}][cantidad]" class="form-control" placeholder="Cantidad" required />
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" name="detalles[${count}][descripcion]" class="form-control" placeholder="Descripción" required />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" name="detalles[${count}][precio_unitario]" class="form-control" placeholder="Precio Unitario" required />
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" name="detalles[${count}][precio_total]" class="form-control" placeholder="Precio Total" disabled />
+                                </div>
+                            `;
                             container.appendChild(newDetail);
                         });
 
                         document.getElementById('details-container').addEventListener('input', function(e) {
-                            if (e.target.name.includes('cantidad') || e.target.name.includes('precio_unitario')) {
-                                const row = e.target.closest('.row');
-                                const cantidad = row.querySelector('[name*="[cantidad]"]').value;
-                                const precioUnitario = row.querySelector('[name*="[precio_unitario]"]').value;
-                                const total = cantidad * precioUnitario;
-                                row.querySelector('[name*="[precio_total]"]').value = total;
-                                updateTotalAmount();
+                            if (e.target.matches('input[name*="cantidad"], input[name*="precio_unitario"]')) {
+                                updateTotal();
                             }
                         });
 
-                        function updateTotalAmount() {
-                            let totalAmount = 0;
-                            document.querySelectorAll('[name*="[precio_total]"]').forEach(input => {
-                                totalAmount += parseFloat(input.value) || 0;
+                        function updateTotal() {
+                            const rows = document.querySelectorAll('#details-container .row');
+                            let total = 0;
+
+                            rows.forEach(row => {
+                                const cantidad = parseFloat(row.querySelector('input[name*="cantidad"]').value) || 0;
+                                const precioUnitario = parseFloat(row.querySelector('input[name*="precio_unitario"]').value) || 0;
+                                const precioTotalField = row.querySelector('input[name*="precio_total"]');
+
+                                const precioTotal = cantidad * precioUnitario;
+                                precioTotalField.value = precioTotal.toFixed(2);
+
+                                total += precioTotal;
                             });
-                            document.getElementById('total-amount').textContent = `${totalAmount.toFixed(2)} COP`;
+
+                            document.getElementById('total-amount').textContent = total.toFixed(2) + ' COP';
                         }
-
-                        document.getElementById('save-modal').addEventListener('click', function() {
-                            const fullname = document.getElementById('modal-fullname').value;
-                            const address = document.getElementById('modal-address').value;
-                            const city = document.getElementById('modal-city').value;
-
-                            if (fullname && address && city) {
-                                // Simulate saving user and updating select field
-                                const userSelect = document.getElementById('user_id');
-                                const newOption = document.createElement('option');
-                                newOption.value = 'new_user_id'; // Replace with actual new user ID
-                                newOption.textContent = fullname;
-                                newOption.selected = true;
-                                userSelect.appendChild(newOption);
-                                userSelect.dispatchEvent(new Event('change'));
-                                $('#modalCenter').modal('hide');
-                            } else {
-                                alert('Please fill all the fields in the modal.');
-                            }
-                        });
                     </script>
                 </div>
             </div>

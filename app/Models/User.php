@@ -32,7 +32,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
+        'apellidos',
+        'cedula',
+        'direccion',
+        'telefono',
+        'barrio',
+        'ciudad',
+        'departamento',
+        ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -71,6 +78,11 @@ class User extends Authenticatable
     public function User()
     {
         return $this->hasMany(\App\Models\Solicitude::class, 'id', 'users_id');
+    }
+
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class);
     }
 
 }

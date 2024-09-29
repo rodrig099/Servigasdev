@@ -13,7 +13,7 @@ class CreateFacturasTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->date('fecha');
             $table->text('nota')->nullable();
-            $table->integer('total')->default(0);
+            $table->bigInteger('total')->default(0);
             $table->timestamps();
         });
     }
