@@ -26,7 +26,7 @@
                                         <th>Fecha</th>
                                         <th>Nota</th>
                                         <th>Total</th>
-                                        <th></th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>

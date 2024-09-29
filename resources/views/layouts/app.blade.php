@@ -178,6 +178,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="menu-item {{ request()->is('/user') ? 'active' : ''}}">
+                            <a href="{{ url('/user') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-group"></i>
+                                <div data-i18n="Analytics">Usuarios</div>
+                            </a>
+                        </li>
                     @endhasrole
 
                     @hasanyrole('Admin|Usuario|Tecnico')

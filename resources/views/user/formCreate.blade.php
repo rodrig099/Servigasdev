@@ -1,6 +1,5 @@
 <div class="row padding-1 p-1">
     <div class="col-md-12">
-
         <div class="form-group mb-2 mb20">
             <label for="name" class="form-label">{{ __('Name') }}</label>
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user?->name) }}" id="name" placeholder="Name">
@@ -12,28 +11,19 @@
             {!! $errors->first('apellidos', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
         <div class="form-group mb-2 mb20">
+            <label for="cedula" class="form-label">{{ __('Cedula') }}</label>
+            <input type="text" name="cedula" class="form-control @error('cedula') is-invalid @enderror" value="{{ old('cedula', $user?->cedula) }}" id="cedula" placeholder="Cedula">
+            {!! $errors->first('cedula', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+        </div>
+        <div class="form-group mb-2 mb20">
+            <label for="password" class="form-label">{{ __('Password') }}</label>
+            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Password" readonly>
+            {!! $errors->first('password', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+        </div>
+        <div class="form-group mb-2 mb20">
             <label for="email" class="form-label">{{ __('Email') }}</label>
             <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $user?->email) }}" id="email" placeholder="Email">
             {!! $errors->first('email', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-        <div class="mb-3 form-password-toggle">
-            <label class="form-label" for="password">Contraseña</label>
-            <div class="input-group input-group-merge">
-                <input type="password" id="password" class="form-control" name="password"
-                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                    aria-describedby="password" required autocomplete="new-password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-            </div>
-        </div>
-        <div class="mb-3 form-password-toggle">
-            <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
-            <div class="input-group input-group-merge">
-                <input type="password" id="password_confirmation" class="form-control"
-                    name="password_confirmation"
-                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                    aria-describedby="password" required autocomplete="new-password" />
-                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-            </div>
         </div>
         <div class="form-group mb-2 mb20">
             <label for="direccion" class="form-label">{{ __('Direccion') }}</label>
@@ -60,14 +50,14 @@
             <input type="text" name="departamento" class="form-control @error('departamento') is-invalid @enderror" value="{{ old('departamento', $user?->departamento) }}" id="departamento" placeholder="Departamento">
             {!! $errors->first('departamento', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
         </div>
-        <div class="form-group mb-2 mb20">
-            <label for="cedula" class="form-label">{{ __('Cedula') }}</label>
-            <input type="text" name="cedula" class="form-control @error('cedula') is-invalid @enderror" value="{{ old('cedula', $user?->cedula) }}" id="cedula" placeholder="Cedula">
-            {!! $errors->first('cedula', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
-        </div>
-
     </div>
     <div class="col-md-12 mt20 mt-2">
         <button type="submit" class="btn btn-primary">Actualizar</button>
     </div>
 </div>
+
+<script>
+    document.getElementById('cedula').addEventListener('input', function() {
+        document.getElementById('password').value = this.value;
+    });
+</script>

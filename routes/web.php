@@ -3,6 +3,7 @@
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\SolicitudeController;
 use App\Http\Controllers\TiposolicitudeController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
 
 
@@ -28,5 +29,6 @@ Route::middleware([
     Route::resource('tiposolicitudes', TiposolicitudeController::class);
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('solicitudes', SolicitudeController::class);
+    Route::resource('users', UserController::class);
 });
 

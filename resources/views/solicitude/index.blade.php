@@ -29,8 +29,7 @@
                                     <th>Tiposolicitudes Id</th>
                                     <th>Descripcion</th>
                                     <th>Estado</th>
-
-                                    <th></th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>

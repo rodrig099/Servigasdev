@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -37,7 +38,10 @@ class UserController extends Controller
      */
     public function store(UserRequest $request): RedirectResponse
     {
-        User::create($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['password'] = Hash::make($validatedData['password']); // Hash de la contraseña
+
+        User::create($validatedData);
 
         return Redirect::route('users.index')
             ->with('success', 'User created successfully.');
@@ -68,7 +72,17 @@ class UserController extends Controller
      */
     public function update(UserRequest $request, User $user): RedirectResponse
     {
-        $user->update($request->validated());
+        $validatedData = $request->validated();
+
+        if ($request->filled('password')) {
+            // Si la contraseña se proporciona, la hasheamos y la actualizamos
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        } else {
+            // Mantener la contraseña actual si no se proporciona una nueva
+            unset($validatedData['password']);
+        }
+
+        $user->update($validatedData);
 
         return Redirect::route('users.index')
             ->with('success', 'User updated successfully');

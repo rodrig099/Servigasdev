@@ -23,6 +23,7 @@ class UserRequest extends FormRequest
     {
         return [
 			'name' => 'required|string',
+            'password' => 'required|string|min:8',
 			'email' => 'required|string',
 			'two_factor_secret' => 'string',
 			'two_factor_recovery_codes' => 'string',
@@ -35,5 +36,14 @@ class UserRequest extends FormRequest
 			'departamento' => 'string',
 			'cedula' => 'string',
         ];
+        if ($this->isMethod('post')) {
+            // Reglas para la creación
+            $rules['password'] = 'required|string|min:8|confirmed';
+        } elseif ($this->isMethod('put') || $this->isMethod('patch')) {
+            // Reglas para la edición
+            $rules['password'] = 'nullable|string|min:8|confirmed';
+        }
+        return $rules;
+
     }
 }
