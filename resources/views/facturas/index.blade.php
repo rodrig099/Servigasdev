@@ -124,8 +124,8 @@
                 tax: 0, // Si no hay impuestos, puedes dejarlo en 0
                 country: 'CO',
                 lang: 'es',
-                response: 'http://127.0.0.1:3000/payment-success', // URL de respuesta
-                confirmation: 'http://127.0.0.1:3000/payment-confirmation', // URL de confirmación
+                response: 'http://127.0.0.1:8000/payment-success', // URL de respuesta
+                confirmation: 'http://127.0.0.1:8000/payment-confirmation', // URL de confirmación
                 email_billing: '{{ $factura->user->email }}', // Email del cliente (de la factura)
                 mobilephone_billing: '{{ $factura->user->telefono }}', // Teléfono del cliente (de la factura)
                 address_billing: '{{ $factura->user->direccion }}', // Dirección del cliente (de la factura)
