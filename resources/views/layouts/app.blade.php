@@ -111,15 +111,6 @@
                         </li>
                     @endhasanyrole
 
-                    @hasrole('Admin')
-                        <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
-                            <a href="{{ url('usuarios') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-id-card"></i>
-                                <div data-i18n="Analytics">Roles y Permisos</div>
-                            </a>
-                        </li>
-                    @endhasrole
-
 
                         <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}} {{ request()->is('solicitudes/create') ? 'active' : ''}}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -178,12 +169,21 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="menu-item {{ request()->is('/user') ? 'active' : ''}}">
-                            <a href="{{ url('/user') }}" class="menu-link">
+                        <li class="menu-item {{ request()->is('users') ? 'active' : ''}}">
+                            <a href="{{ url('/users') }}" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-group"></i>
                                 <div data-i18n="Analytics">Usuarios</div>
                             </a>
                         </li>
+                    @endhasrole
+
+                    @hasrole('Admin')
+                    <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
+                        <a href="{{ url('usuarios') }}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-id-card"></i>
+                            <div data-i18n="Analytics">Roles y Permisos</div>
+                        </a>
+                    </li>
                     @endhasrole
 
                     @hasanyrole('Admin|Usuario|Tecnico')
