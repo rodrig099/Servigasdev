@@ -32,3 +32,14 @@ Route::middleware([
     Route::resource('users', UserController::class);
 });
 
+use App\Http\Controllers\PaymentController;
+
+Route::get('/checkout', [PaymentController::class, 'checkout'])->name('checkout');
+Route::post('/process-payment', [PaymentController::class, 'processPayment'])->name('process.payment');
+Route::get('/payment-success', function () {
+    return 'pago exitoso!';
+})->name('payment.success');
+Route::get('/payment-failed', function () {
+    return 'Payment failed. Please try again.';
+})->name('payment.failed');
+

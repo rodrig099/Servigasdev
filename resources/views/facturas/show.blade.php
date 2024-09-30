@@ -45,6 +45,64 @@
                                 <div class="row padding-1 p-1">
                                     <div class="col-md-6">
                                         <div class="form-group mb-2 mb20">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input type="text" name="nombre" id="nombre"
+                                                class="form-control"  value="{{ $user->name }}" readonly />
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="user_id" id="user_id" />
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="apellidos" class="form-label">Apellidos</label>
+                                            <input type="text" name="apellidos" id="apellidos"
+                                            class="form-control"  value="{{ $user->apellidos }}" readonly />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="barrio" class="form-label">Barrio</label>
+                                            <input type="text" name="barrio" id="barrio"
+                                            class="form-control"  value="{{ $user->barrio }}" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="direccion" class="form-label">Dirección</label>
+                                            <input type="text" name="direccion" id="direccion"
+                                            class="form-control"  value="{{ $user->direccion }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="ciudad" class="form-label">Ciudad</label>
+                                            <input type="text" name="ciudad" id="ciudad"
+                                            class="form-control"  value="{{ $user->ciudad }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="departamento" class="form-label">Departamento</label>
+                                            <input type="text" name="departamento" id="departamento"
+                                            class="form-control"  value="{{ $user->departamento }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="cedula" class="form-label">Cédula</label>
+                                            <input type="text" name="cedula" id="cedula"
+                                            class="form-control"  value="{{ $user->cedula }}" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
                                             <label for="fecha" class="form-label">Date</label>
                                             <input type="date" name="fecha" id="fecha"
                                                 class="form-control @error('fecha') is-invalid @enderror"
@@ -70,7 +128,8 @@
                                         <div class="row padding-1 p-1">
                                             <div class="col-md-3">
                                                 <div class="form-group mb-2 mb20">
-                                                    <input type="number" name="detalles[{{ $index }}][cantidad]"
+                                                    <input type="number"
+                                                        name="detalles[{{ $index }}][cantidad]"
                                                         class="form-control @error('detalles.{{ $index }}.cantidad') is-invalid @enderror"
                                                         placeholder="Quantity"
                                                         value="{{ old('detalles.' . $index . '.cantidad', $detalle->cantidad) }}"
