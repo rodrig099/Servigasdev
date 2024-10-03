@@ -185,4 +185,11 @@ class FacturaController extends Controller
 
         return redirect()->route('facturas.index')->with('success', 'Invoice deleted successfully.');
     }
+
+    public function card()
+    {
+        $facturaCount = Factura::count(); // Contar los registros
+
+        return view('dashboard', compact('facturaCount')); // Pasar el conteo a la vista
+    }
 }

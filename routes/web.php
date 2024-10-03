@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\SolicitudeController;
 use App\Http\Controllers\TiposolicitudeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
-
-
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,7 +19,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', [SolicitudeController::class, 'card'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'card'])->name('dashboard');
     Route::get('/solicitude', function () {
         return view('solicitude.show');
     })->name('solicitude');

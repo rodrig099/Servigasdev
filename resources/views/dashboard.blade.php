@@ -5,6 +5,6 @@
         </h2>
     </x-slot>
 
-    <x-dashboard.cardInfo :solicitudCount="$solicitudCount" :pendientesCount='$pendientesCount' />
+    <x-dashboard.cardInfo :facturaCount='$facturaCount' :pendientesCount='$pendientesCount' />
 
 </x-app-layout>
