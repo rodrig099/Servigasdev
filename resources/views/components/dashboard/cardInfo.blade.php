@@ -33,7 +33,7 @@
                     <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                         <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                             <div class="card-title">
-                                <h5 class="text-nowrap mb-2">Profile Report</h5>
+                                <h5 class="text-nowrap mb-2">Facturas</h5>
                                 <span class="badge bg-label-warning rounded-pill">Year 2021</span>
                             </div>
                             <div class="mt-sm-auto">
@@ -58,7 +58,7 @@
                     <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
                         <div class="d-flex flex-sm-column flex-row align-items-start justify-content-between">
                             <div class="card-title">
-                                <h5 class="text-nowrap mb-2">Profile Report</h5>
+                                <h5 class="text-nowrap mb-2">Vencimiento de certificación</h5>
                                 <span class="badge bg-label-warning rounded-pill">Year 2021</span>
                             </div>
                             <div class="mt-sm-auto">
