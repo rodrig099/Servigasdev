@@ -104,6 +104,8 @@ class SolicitudeController extends Controller
     public function card()
     {
         $solicitudCount = Solicitude::count(); // Contar los registros
-        return view('dashboard', compact('solicitudCount')); // Pasar el conteo a la vista
+        $pendientesCount = Solicitude::where('estatus', 'PENDIENTE')->count();
+
+        return view('dashboard', compact('solicitudCount', 'pendientesCount')); // Pasar el conteo a la vista
     }
 }

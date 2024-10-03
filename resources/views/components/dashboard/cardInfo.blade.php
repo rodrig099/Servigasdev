@@ -11,7 +11,7 @@
                                 <h5 class="text-nowrap mb-3">Solicitudes</h5>
                                 <span class="badge bg-label-warning rounded-pill mb-2">Solicitudes pendientes:</span>
                                 <small class="text-success text-nowrap fw-semibold">
-                                    {{ $solicitudCount }}
+                                    {{ $pendientesCount }}
                                 </small>
                             </div>
                             <div class="mt-sm-auto d-flex">
