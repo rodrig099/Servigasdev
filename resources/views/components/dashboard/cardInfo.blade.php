@@ -40,9 +40,9 @@
                                 </small>
                             </div>
                             <div class="mt-sm-auto d-flex">
-                                <a href="{{ route('solicitudes.create') }}"
+                                <a href="{{ route('facturas.create') }}"
                                     class="btn rounded-pill btn-primary me-2">Generar Factura</a>
-                                <a href="{{ route('solicitudes.index') }}" class="btn rounded-pill btn-primary">Ver
+                                <a href="{{ route('facturas.index') }}" class="btn rounded-pill btn-primary">Ver
                                     Facturas</a>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                                 <span class="badge bg-label-danger rounded-pill mb-2">Vencida: 03/10/2024</span>
                             </div>
                             <div class="mt-sm-auto d-flex">
-                                <a href="{{ route('solicitudes.create') }}"
+                                <a href="{{ route('facturas.create') }}"
                                     class="btn rounded-pill btn-primary me-2">Generar Factura</a>
                             </div>
                         </div>

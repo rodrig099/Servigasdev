@@ -169,6 +169,14 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
+                            <a href="{{ url('usuarios') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-building-house"></i>
+                                <div data-i18n="Analytics">Instalaciones</div>
+                            </a>
+                        </li>
+
                         <li class="menu-item {{ request()->is('users') ? 'active' : ''}}">
                             <a href="{{ url('/users') }}" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-group"></i>
