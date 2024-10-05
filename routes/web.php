@@ -13,6 +13,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('facturas/pdf', [FacturaController::class, 'pdf'])->name('facturas.pdf')->middleware('auth');
+
 
 Route::middleware([
     'auth:sanctum',

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
 use Illuminate\Support\Facades\Auth;
-
+use PDF;
 
 class FacturaController extends Controller
 {
@@ -25,6 +25,20 @@ class FacturaController extends Controller
 
         // Devolver la vista con las facturas
         return view('facturas.index', compact('facturas'));
+    }
+
+    public function pdf()
+    {
+        // Obtener el usuario autenticado
+        $user = Auth::user();
+
+        // Obtener las facturas del usuario autenticado y paginarlas
+        $facturas = $user->facturas()->with('detalles')->paginate(10);
+
+        //return view ('facturas.pdf', compact('facturas'));
+        $pdf = PDF::loadView('facturas.pdf',['facturas'=>$facturas]);
+        //$pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
     }
 
 
