@@ -5,7 +5,7 @@ use App\Http\Controllers\SolicitudeController;
 use App\Http\Controllers\TiposolicitudeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
-
+use App\Http\Controllers\TarjetaproController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -26,10 +26,12 @@ Route::middleware([
     Route::resource('facturas', FacturaController::class);
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
+    Route::get('/users/{id}/details', [TarjetaproController::class, 'getUserDetails']);
     Route::resource('tiposolicitudes', TiposolicitudeController::class);
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('solicitudes', SolicitudeController::class);
     Route::resource('users', UserController::class);
+    Route::resource('tarjetapros', TarjetaproController::class);
 });
 
 use App\Http\Controllers\PaymentController;
@@ -42,4 +44,3 @@ Route::get('/payment-success', function () {
 Route::get('/payment-failed', function () {
     return 'Payment failed. Please try again.';
 })->name('payment.failed');
-

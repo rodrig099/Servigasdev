@@ -12,6 +12,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
+                            <th>Apellidos</th>
                             <th>Email</th>
                             <th></th>
                         </tr>
@@ -22,6 +23,7 @@
                             <tr>
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
+                                <td>{{$user->apellidos}}</td>
                                 <td>{{$user->email}}</td>
                                 <td width="10px">
                                     <a class="btn btn-primary" href="{{route('usuario.user.edit', $user->id)}}" >Editar</a> 
