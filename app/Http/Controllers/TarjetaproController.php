@@ -9,13 +9,16 @@ use App\Http\Requests\TarjetaproRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+
 class TarjetaproController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request): View
     {
+
         $tarjetapros = Tarjetapro::paginate();
         $users = \App\Models\User::all();
 
