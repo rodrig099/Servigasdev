@@ -183,6 +183,12 @@
                                 <div data-i18n="Analytics">Usuarios</div>
                             </a>
                         </li>
+                         <li class="menu-item {{ request()->is('tarjetapros') ? 'active' : ''}}">
+                            <a href="{{ url('/tarjetapros') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-group"></i>
+                                <div data-i18n="Analytics">Tecnicos</div>
+                            </a>
+                        </li>
                     @endhasrole
 
                     @hasrole('Admin')
