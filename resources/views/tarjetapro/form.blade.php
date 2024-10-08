@@ -5,8 +5,11 @@
     <form action="{{ route('tarjetapros.store') }}" method="POST">
         @csrf
 
+        <!-- Campo oculto para user_id -->
+        <input type="hidden" id="user_id" name="user_id">
+
         <!-- Select para elegir usuario -->
-        Cédula</label>
+        <label for="search_cedula">Cédula</label>
         <div class="input-group">
             <input type="text" name="search_cedula" id="search_cedula"
                 class="form-control @error('search_cedula') is-invalid @enderror"
@@ -28,6 +31,7 @@
             <label for="apellidos">Apellidos</label>
             <input type="text" id="apellidos" name="apellidos" class="form-control" readonly>
         </div>
+
         <!-- Campos específicos de Tarjeta Pro -->
         <div class="form-group">
             <label for="codigo">Código</label>
@@ -50,25 +54,9 @@
 
 <!-- Script para usar AJAX y traer datos del usuario -->
 <script>
-    document.getElementById('user_id').addEventListener('change', function() {
-        var userId = this.value;
+    document.getElementById('search-button').addEventListener('click', function() {
+        const cedula = document.getElementById('search_cedula').value;
 
-        if (userId) {
-            fetch(`/users/${userId}/details`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('nombre').value = data.name;
-                    document.getElementById('apellidos').value = data.apellidos;
-                })
-                .catch(error => console.error('Error:', error));
-        } else {
-            document.getElementById('nombre').value = '';
-            document.getElementById('apellidos').value = '';
-        }
-    });
-
-    document.getElementById('search_cedula').addEventListener('blur', function() {
-        const cedula = this.value;
         if (cedula) {
             fetch(`/api/users/${cedula}`)
                 .then(response => response.json())
@@ -77,8 +65,7 @@
                         document.getElementById('nombre').value = data.nombre;
                         document.getElementById('apellidos').value = data.apellidos;
                         // Asigna el user_id al campo oculto
-                        document.getElementById('user_id').value = data
-                            .id; // Asegúrate de que el ID esté en el objeto data
+                        document.getElementById('user_id').value = data.id;
                     } else {
                         alert('Usuario no encontrado');
                     }
@@ -87,6 +74,8 @@
                     console.error('Error fetching user:', error);
                     alert('Error al buscar el usuario');
                 });
+        } else {
+            alert('Por favor ingrese un número de cédula');
         }
     });
 </script>
