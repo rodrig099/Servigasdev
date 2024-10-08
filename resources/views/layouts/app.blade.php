@@ -148,7 +148,7 @@
                     </li>
 
                     @hasrole('Admin')
-<<<<<<< HEAD
+
                         <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}} {{ request()->is('cotizaciones') ? 'active' : ''}}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon tf-icons bx bx-archive"></i>
@@ -189,13 +189,13 @@
                             </a>
                         </li>
                     @endhasrole
-=======
+
     <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }} {{ request()->is('cotizaciones') ? 'active' : '' }}">
                                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                                     <i class="menu-icon tf-icons bx bx-archive"></i>
                                     <div data-i18n="Layouts">Facturación</div>
                                 </a>
->>>>>>> 0b1774de607c08dea464bbeda3b431df0df03edd
+
 
                                 <ul class="menu-sub">
                                     <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }}">
@@ -223,7 +223,7 @@
                                 </a>
                             </li>
 @endhasrole
-                   
+
                     @hasrole('Admin')
     <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
                             <a href="{{ url('usuarios') }}" class="menu-link">
