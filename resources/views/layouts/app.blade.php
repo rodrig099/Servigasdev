@@ -189,49 +189,6 @@
                             </a>
                         </li>
                     @endhasrole
-
-    <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }} {{ request()->is('cotizaciones') ? 'active' : '' }}">
-                                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                    <i class="menu-icon tf-icons bx bx-archive"></i>
-                                    <div data-i18n="Layouts">Facturación</div>
-                                </a>
-
-
-                                <ul class="menu-sub">
-                                    <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }}">
-                                        <a href="{{ url('facturas') }}" class="menu-link">
-                                            <div data-i18n="Without menu">Facturas</div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : '' }}">
-                                        <a href="{{ url('cotizaciones') }}" class="menu-link">
-                                            <div data-i18n="Without navbar">Cotizaciones</div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
-                                <a href="{{ url('/users') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons bx bx-group"></i>
-                                    <div data-i18n="Analytics">Usuarios</div>
-                                </a>
-                            </li>
-                            <li class="menu-item {{ request()->is('tarjetapros') ? 'active' : '' }}">
-                                <a href="{{ url('/tarjetapros') }}" class="menu-link">
-                                    <i class="menu-icon tf-icons bx bx-group"></i>
-                                    <div data-i18n="Analytics">Tecnicos</div>
-                                </a>
-                            </li>
-
-                    @hasrole('Admin')
-    <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
-                            <a href="{{ url('usuarios') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-id-card"></i>
-                                <div data-i18n="Analytics">Roles y Permisos</div>
-                            </a>
-                        </li>
-@endhasrole
-
                     @hasanyrole('Admin|Usuario|Tecnico')
     <li class="menu-item {{ request()->is('user/profile') ? 'active' : '' }}">
                             <a href="{{ url('user/profile') }}" class="menu-link">
