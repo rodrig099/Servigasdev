@@ -171,7 +171,7 @@
                         </li>
                         <li class="menu-item {{ request()->is('tarjetapros') ? 'active' : '' }}">
                             <a href="{{ url('/tarjetapros') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-group"></i>
+                                <i class="menu-icon tf-icons bx bx-id-card"></i>
                                 <div data-i18n="Analytics">Tarjeta Profesional</div>
                             </a>
                         </li>
@@ -180,7 +180,7 @@
                     @hasrole('Admin')
                         <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
                             <a href="{{ url('usuarios') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-id-card"></i>
+                                <i class="menu-icon tf-icons bx bx-key"></i>
                                 <div data-i18n="Analytics">Roles y Permisos</div>
                             </a>
                         </li>

@@ -30,7 +30,6 @@
                                         <th>Codigo</th>
                                         <th>Expedido</th>
                                         <th>Vigencia</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>
