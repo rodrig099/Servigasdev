@@ -187,13 +187,6 @@
                     @endhasrole
 
                     @hasanyrole('Admin|Usuario|Tecnico')
-                        <li class="menu-item {{ request()->is('configuracion') ? 'active' : '' }}">
-                            <a href="{{ url('configuracion') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-cog"></i>
-                                <div data-i18n="Analytics">Configuraciones</div>
-                            </a>
-                        </li>
-
                         <li class="menu-item {{ request()->is('user/profile') ? 'active' : '' }}">
                             <a href="{{ url('user/profile') }}" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-user"></i>

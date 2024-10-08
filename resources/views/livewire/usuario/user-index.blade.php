@@ -13,6 +13,7 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
+                            <th>Rol</th>
                             <th>Email</th>
                             <th></th>
                         </tr>
@@ -24,9 +25,16 @@
                                 <td>{{$user->id}}</td>
                                 <td>{{$user->name}}</td>
                                 <td>{{$user->apellidos}}</td>
+                                <td>
+                                    @if ($user->roles->isNotEmpty())
+                                        {{ $user->roles->pluck('name')->implode(', ') }}
+                                    @else
+                                        <span>No asignado</span>
+                                    @endif
+                                </td>
                                 <td>{{$user->email}}</td>
                                 <td width="10px">
-                                    <a class="btn btn-primary" href="{{route('usuario.user.edit', $user->id)}}" >Editar</a> 
+                                    <a class="btn btn-primary" href="{{route('usuario.user.edit', $user->id)}}" >Editar</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -46,5 +54,5 @@
 
         @endif
 
-    </div>    
+    </div>
 </div>
