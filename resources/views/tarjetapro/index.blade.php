@@ -12,6 +12,20 @@
                         </div>
                     </div>
 
+                    <div class="container mb-3">
+                        <!-- Search -->
+                    <div class="navbar-nav">
+                        <div class="nav-item d-flex align-items-center">
+                            <i class="bx bx-search fs-4 lh-0"></i>
+                            <input
+                                type="text"
+                                class="form-control border-0 shadow-none"
+                                placeholder="Buscar..."
+                                aria-label="Search..." />
+                        </div>
+                    </div>
+                    <!-- /Search -->
+
                     @if ($message = Session::get('success'))
                         <div class="alert alert-success m-4">
                             <p>{{ $message }}</p>
