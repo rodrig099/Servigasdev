@@ -172,7 +172,7 @@
                         <li class="menu-item {{ request()->is('tarjetapros') ? 'active' : '' }}">
                             <a href="{{ url('/tarjetapros') }}" class="menu-link">
                                 <i class="menu-icon tf-icons bx bx-group"></i>
-                                <div data-i18n="Analytics">Tecnicos</div>
+                                <div data-i18n="Analytics">Tarjeta Profesional</div>
                             </a>
                         </li>
                     @endhasrole
