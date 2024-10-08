@@ -36,7 +36,7 @@ class FacturaController extends Controller
         $facturas = $user->facturas()->with('detalles')->paginate(10);
 
         //return view ('facturas.pdf', compact('facturas'));
-        $pdf = PDF::loadView('facturas.pdf',['facturas'=>$facturas]);
+        $pdf = PDF::loadView('facturas.pdf', ['facturas' => $facturas]);
         //$pdf->loadHTML('<h1>Test</h1>');
         return $pdf->stream();
     }
@@ -199,5 +199,4 @@ class FacturaController extends Controller
 
         return redirect()->route('facturas.index')->with('success', 'Invoice deleted successfully.');
     }
-
 }
