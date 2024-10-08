@@ -15,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles;
+    use Notifiable, HasRoles;
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
@@ -39,7 +39,7 @@ class User extends Authenticatable
         'barrio',
         'ciudad',
         'departamento',
-        ];
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

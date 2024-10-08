@@ -4,7 +4,7 @@ namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class kernel extends HttpKernel
+class Kernel extends HttpKernel
 {
     /**
      * Los middleware globales que se ejecutan en cada solicitud.
@@ -56,12 +56,9 @@ class kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // Registro de middlewares de roles y permisos de Spatie
-        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-
-        // Middleware personalizado (si es necesario)
-        'hasroles' => \App\Http\Middleware\HasRoles::class,
 
     ];
 }

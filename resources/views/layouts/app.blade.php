@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 
 <!-- =========================================================
@@ -34,7 +32,7 @@
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{asset ('build/assets/dashboard/assets/img/favicon/favicon.ico')}}" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('build/assets/dashboard/assets/img/favicon/favicon.ico') }}" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,26 +52,26 @@
     @livewireStyles
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/vendor/fonts/boxicons.css')}}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/vendor/fonts/boxicons.css') }}" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/css/demo.css')}}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/css/demo.css') }}" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-    <link rel="stylesheet" href="{{asset ('build/assets/dashboard/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
+    <link rel="stylesheet" href="{{ asset('build/assets/dashboard/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/js/helpers.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/js/helpers.js') }}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="{{asset ('build/assets/dashboard/assets/js/config.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/js/config.js') }}"></script>
 </head>
 
 <body>
@@ -86,7 +84,7 @@
                 <div class="app-brand demo">
                     <a href="#" class="app-brand-link">
                         <span class="app-brand-logo demo">
-                        <img src="{{asset('build/assets/dashboard/assets/img/favicon/logo.png')}}" alt="Logo" style="width: 22px; height: 30px;">
+                        <img src="{{ asset('build/assets/dashboard/assets/img/favicon/logo.png') }}" alt="Logo" style="width: 22px; height: 30px;">
 
                         </span>
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">Servigas del Huila</span>
@@ -103,16 +101,16 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     @hasanyrole('Admin|Usuario')
-                        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : ''}}">
-                            <a href="{{ route('dashboard') }}" class="menu-link">
-                                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                                <div data-i18n="Analytics">Dashboard</div>
-                            </a>
-                        </li>
-                    @endhasanyrole
+    <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                                <a href="{{ route('dashboard') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                                    <div data-i18n="Analytics">Dashboard</div>
+                                </a>
+                            </li>
+@endhasanyrole
 
 
-                        <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}} {{ request()->is('solicitudes/create') ? 'active' : ''}}">
+                        <li class="menu-item {{ request()->is('solicitudes') ? 'active' : '' }} {{ request()->is('solicitudes/create') ? 'active' : '' }}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon tf-icons bx bx-edit"></i>
                                 <div data-i18n="Layouts">Solicitudes</div>
@@ -123,33 +121,34 @@
                         <ul class="menu-sub">
 
                             @hasrole('Admin')
-                                <li class="menu-item {{ request()->is('tiposolicitudes') ? 'active' : ''}}">
-                                    <a href="{{ url('tiposolicitudes') }}" class="menu-link">
-                                        <div data-i18n="Without menu">Tipo de Solicitud</div>
-                                    </a>
-                                </li>
-                            @endhasrole
+    <li class="menu-item {{ request()->is('tiposolicitudes') ? 'active' : '' }}">
+                                        <a href="{{ url('tiposolicitudes') }}" class="menu-link">
+                                            <div data-i18n="Without menu">Tipo de Solicitud</div>
+                                        </a>
+                                    </li>
+@endhasrole
 
                             @hasanyrole('Admin|Usuario')
-                                <li class="menu-item {{ request()->is('solicitudes/create') ? 'active' : ''}}">
-                                    <a href="{{ url('solicitudes/create') }}" class="menu-link">
-                                        <div data-i18n="Without menu">Nueva solicitud</div>
-                                    </a>
-                                </li>
-                            @endhasanyrole
+    <li class="menu-item {{ request()->is('solicitudes/create') ? 'active' : '' }}">
+                                        <a href="{{ url('solicitudes/create') }}" class="menu-link">
+                                            <div data-i18n="Without menu">Nueva solicitud</div>
+                                        </a>
+                                    </li>
+@endhasanyrole
 
                             @hasanyrole('Admin|Usuario|Tecnico')
-                                <li class="menu-item {{ request()->is('solicitudes') ? 'active' : ''}}">
-                                    <a href="{{ url('solicitudes') }}" class="menu-link">
-                                        <div data-i18n="Without navbar">Mis solicitudes</div>
-                                    </a>
-                                </li>
-                            @endhasanyrole
+    <li class="menu-item {{ request()->is('solicitudes') ? 'active' : '' }}">
+                                        <a href="{{ url('solicitudes') }}" class="menu-link">
+                                            <div data-i18n="Without navbar">Mis solicitudes</div>
+                                        </a>
+                                    </li>
+@endhasanyrole
 
                         </ul>
                     </li>
 
                     @hasrole('Admin')
+<<<<<<< HEAD
                         <li class="menu-item {{ request()->is('facturas') ? 'active' : ''}} {{ request()->is('cotizaciones') ? 'active' : ''}}">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <i class="menu-icon tf-icons bx bx-archive"></i>
@@ -190,24 +189,58 @@
                             </a>
                         </li>
                     @endhasrole
+=======
+    <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }} {{ request()->is('cotizaciones') ? 'active' : '' }}">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <i class="menu-icon tf-icons bx bx-archive"></i>
+                                    <div data-i18n="Layouts">Facturación</div>
+                                </a>
+>>>>>>> 0b1774de607c08dea464bbeda3b431df0df03edd
 
+                                <ul class="menu-sub">
+                                    <li class="menu-item {{ request()->is('facturas') ? 'active' : '' }}">
+                                        <a href="{{ url('facturas') }}" class="menu-link">
+                                            <div data-i18n="Without menu">Facturas</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : '' }}">
+                                        <a href="{{ url('cotizaciones') }}" class="menu-link">
+                                            <div data-i18n="Without navbar">Cotizaciones</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
+                                <a href="{{ url('/users') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-group"></i>
+                                    <div data-i18n="Analytics">Usuarios</div>
+                                </a>
+                            </li>
+                            <li class="menu-item {{ request()->is('tarjetapros') ? 'active' : '' }}">
+                                <a href="{{ url('/tarjetapros') }}" class="menu-link">
+                                    <i class="menu-icon tf-icons bx bx-group"></i>
+                                    <div data-i18n="Analytics">Tecnicos</div>
+                                </a>
+                            </li>
+@endhasrole
+                   
                     @hasrole('Admin')
-                    <li class="menu-item {{ request()->is('usuarios') ? 'active' : ''}}">
-                        <a href="{{ url('usuarios') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-id-card"></i>
-                            <div data-i18n="Analytics">Roles y Permisos</div>
-                        </a>
-                    </li>
-                    @endhasrole
+    <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
+                            <a href="{{ url('usuarios') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-id-card"></i>
+                                <div data-i18n="Analytics">Roles y Permisos</div>
+                            </a>
+                        </li>
+@endhasrole
 
                     @hasanyrole('Admin|Usuario|Tecnico')
-                    <li class="menu-item {{ request()->is('user/profile') ? 'active' : ''}}">
-                        <a href="{{ url('user/profile') }}" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Analytics">Perfil</div>
-                        </a>
-                    </li>
-                    @endhasanyrole
+    <li class="menu-item {{ request()->is('user/profile') ? 'active' : '' }}">
+                            <a href="{{ url('user/profile') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-user"></i>
+                                <div data-i18n="Analytics">Perfil</div>
+                            </a>
+                        </li>
+@endhasanyrole
                 </ul>
             </aside>
             <!-- / Menu -->
@@ -239,22 +272,23 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}">
+    </script>
 
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/js/menu.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="{{asset ('build/assets/dashboard/assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
     <!-- Main JS -->
-    <script src="{{asset ('build/assets/dashboard/assets/js/main.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
-    <script src="{{asset ('build/assets/dashboard/assets/js/dashboards-analytics.js')}}"></script>
+    <script src="{{ asset('build/assets/dashboard/assets/js/dashboards-analytics.js') }}"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Spatie\Permission\PermissionServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        $this->app->register(PermissionServiceProvider::class);
     }
 
     /**
@@ -22,9 +24,9 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
-    protected $listen = [
-        \Illuminate\Auth\Events\Registered::class => [
-            \App\Listeners\AssignUserRole::class,
-        ],
-    ];
+    //protected $listen = [
+    //\Illuminate\Auth\Events\Registered::class => [
+    //\App\Listeners\AssignUserRole::class,
+    //],
+    //];
 }
