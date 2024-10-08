@@ -222,7 +222,6 @@
                                     <div data-i18n="Analytics">Tecnicos</div>
                                 </a>
                             </li>
-@endhasrole
 
                     @hasrole('Admin')
     <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
