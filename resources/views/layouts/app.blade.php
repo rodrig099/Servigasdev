@@ -189,6 +189,17 @@
                             </a>
                         </li>
                     @endhasrole
+
+
+                    @hasrole('Admin')
+    <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
+                            <a href="{{ url('usuarios') }}" class="menu-link">
+                                <i class="menu-icon tf-icons bx bx-id-card"></i>
+                                <div data-i18n="Analytics">Roles y Permisos</div>
+                            </a>
+                        </li>
+@endhasrole
+
                     @hasanyrole('Admin|Usuario|Tecnico')
     <li class="menu-item {{ request()->is('user/profile') ? 'active' : '' }}">
                             <a href="{{ url('user/profile') }}" class="menu-link">
