@@ -6,15 +6,9 @@ use App\Http\Controllers\SolicitudeController;
 use App\Http\Controllers\TiposolicitudeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuarioController;
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\TarjetaproController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-
-
-
->>>>>>> 0b1774de607c08dea464bbeda3b431df0df03edd
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -37,12 +31,12 @@ Route::middleware([
     Route::resource('facturas', FacturaController::class)->middleware('auth');
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
-<<<<<<< HEAD
+
     Route::resource('tiposolicitudes', TiposolicitudeController::class);
     Route::resource('usuarios', UsuarioController::class);
     Route::resource('solicitudes', SolicitudeController::class);
     Route::resource('users', UserController::class);
-=======
+
     Route::get('/users/{id}/details', [TarjetaproController::class, 'getUserDetails'])->middleware('auth');
     Route::resource('tiposolicitudes', TiposolicitudeController::class)->middleware('auth');
     Route::resource('usuarios', UsuarioController::class)->middleware('auth');
@@ -58,7 +52,7 @@ Route::middleware([
         return response()->json(['roles' => $roles, 'permissions' => $permissions]);
     });
 
->>>>>>> 0b1774de607c08dea464bbeda3b431df0df03edd
+
 });
 
 use App\Http\Controllers\PaymentController;
