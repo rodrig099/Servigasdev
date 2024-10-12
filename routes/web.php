@@ -10,7 +10,12 @@ use App\Http\Controllers\TarjetaproController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
+
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +36,9 @@ Route::middleware([
     Route::resource('facturas', FacturaController::class)->middleware('auth');
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
+    Route::get('/usuarios/{user}/index', [UsuarioController::class, 'index'])->name('usuario.user.index')->middleware('auth');
+
+
 
     Route::resource('tiposolicitudes', TiposolicitudeController::class);
     Route::resource('usuarios', UsuarioController::class);
@@ -44,7 +52,13 @@ Route::middleware([
     Route::resource('users', UserController::class)->middleware('auth');
     Route::resource('tarjetapros', TarjetaproController::class)->middleware('auth');
 
-
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/files', [FileController::class, 'index'])->name('files.index');
+        Route::get('/files/create', [FileController::class, 'create'])->name('files.create');
+        Route::post('/files', [FileController::class, 'store'])->name('files.store');
+        Route::get('/files/{id}/download', [FileController::class, 'download'])->name('files.download');
+        Route::delete('/files/{id}', [FileController::class, 'destroy'])->name('files.destroy');
+    });
 
     Route::get('/roles-permissions', function () {
         $roles = Role::all();
@@ -65,4 +79,3 @@ Route::get('/payment-success', function () {
 Route::get('/payment-failed', function () {
     return 'Payment failed. Please try again.';
 })->name('payment.failed');
-

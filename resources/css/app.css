@@ -5,3 +5,25 @@
 [x-cloak] {
     display: none;
 }
+
+/* Ajuste para el box-sizing y evitar desbordamientos */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Evitar desbordamiento horizontal */
+}
+
+.table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.table {
+    width: 100%;
+    table-layout: auto; /* Ajustar automáticamente el ancho de las columnas */
+}

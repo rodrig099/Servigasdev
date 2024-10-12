@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container-xxl flex-grow-1 container-p-y d-flex flex-column" style="min-height: 100vh;">
+    <div class="container-fluid flex-grow-1 container-p-y d-flex flex-column" style="min-height: 100vh;">
         <div class="row flex-grow-1">
             <div class="col-xl d-flex flex-column">
                 <div class="card flex-grow-1 d-flex flex-column">
@@ -29,12 +29,11 @@
                         </div>
                     @endif
 
-                    <div class="table-responsive text-nowrap flex-grow-1">
+                    <div class="table-responsive text-nowrap flex-grow-1" style="max-width: 100%;">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
-
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Telefono</th>
@@ -113,8 +112,6 @@
         </div>
     </div>
 
-
-
     <script>
         let deleteFormAction;
 
@@ -147,5 +144,4 @@
             form.submit();
         });
     </script>
-
 </x-app-layout>

@@ -14,8 +14,17 @@ use Illuminate\Support\Facades\Auth;
  * Class SolicitudeController
  * @package App\Http\Controllers
  */
+
 class SolicitudeController extends Controller
 {
+
+    public function __construct()
+    {
+
+        //$this->middleware('role:Admin.solicitudes.index');
+
+    }
+
     /**
      * Display a listing of the resource.
      */
