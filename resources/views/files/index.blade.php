@@ -37,14 +37,16 @@
                                     <i class="bi bi-folder" style="font-size: 3rem;"></i>
                                     <div class="mt-2">{{ $carpeta->folder_name }}</div>
                                 </a>
-                                {{-- Mostrar el nombre del creador y su rol si el rol actual es Admin o Técnico --}}
-                                @if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Tecnico'))
-                                    <p class="text-muted">
-                                        Creado por: {{ $carpeta->user->name }}
-                                        ({{ $carpeta->user->roles->pluck('name')->implode(', ') }})
-                                        {{-- Mostrar el rol --}}
-                                    </p>
-                                @endif
+                                @hasanyrole('Admin|Tecnico')
+                                    {{-- Mostrar el nombre del creador y su rol si el rol actual es Admin o Técnico --}}
+                                    @if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Tecnico'))
+                                        <p class="text-muted">
+                                            De: {{ $carpeta->user->name }} {{ $carpeta->user->apellidos }}
+                                            ({{ $carpeta->user->roles->pluck('name')->implode(', ') }})
+                                            {{-- Mostrar el rol --}}
+                                        </p>
+                                    @endif
+                                @endhasanyrole
 
                             </h5>
                             @if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Tecnico') || Auth::user()->hasRole('Usuario'))
