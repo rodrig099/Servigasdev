@@ -63,7 +63,7 @@
                                                     <a class="dropdown-item" href="{{ route('cotizaciones.edit', $cotizacione->id) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Editar
                                                     </a>
-                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="event.preventDefault(); showDeleteModal({{ $factura->id }});">
+                                                    <a class="dropdown-item" href="javascript:void(0);" onclick="event.preventDefault(); showDeleteModal({{ $cotizacione->id }});">
                                                         <i class="bx bx-trash me-1"></i> Eliminar
                                                     </a>
                                                 </div>
@@ -100,17 +100,17 @@
     </div>
 
     <script>
-        function showDeleteModal(facturaId) {
+        function showDeleteModal(cotizacioneId) {
             const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {});
-            document.getElementById('confirmDelete').setAttribute('data-factura-id', facturaId);
+            document.getElementById('confirmDelete').setAttribute('data-cotizacione-id', cotizacioneId);
             deleteModal.show();
         }
 
         document.getElementById('confirmDelete').addEventListener('click', function() {
-            const facturaId = this.getAttribute('data-factura-id');
+            const cotizacioneId = this.getAttribute('data-cotizacione-id');
             const form = document.createElement('form');
             form.setAttribute('method', 'POST');
-            form.setAttribute('action', `/facturas/${facturaId}`);
+            form.setAttribute('action', `/cotizaciones/${cotizacioneId}`);
             form.innerHTML = `
                 @csrf
                 @method('DELETE')

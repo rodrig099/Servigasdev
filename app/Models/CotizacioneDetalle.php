@@ -9,7 +9,7 @@ class CotizacioneDetalle extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cotizacion_id', 'cantidad', 'descripcion', 'precio_unitario', 'precio_total'];
+    protected $fillable = ['cotizacione_id', 'cantidad', 'descripcion', 'precio_unitario', 'precio_total'];
 
     public function factura()
     {

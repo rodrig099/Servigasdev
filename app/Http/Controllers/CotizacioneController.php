@@ -74,7 +74,7 @@ class CotizacioneController extends Controller
             $total += $precioTotal;
 
             CotizacioneDetalle::create([
-                'factura_id' => $cotizacione->id,
+                'cotizacione_id' => $cotizacione->id,
                 'cantidad' => $cantidad,
                 'descripcion' => $detalle['descripcion'] ?? '',
                 'precio_unitario' => $precioUnitario,
