@@ -85,7 +85,7 @@ class CotizacioneController extends Controller
         // Actualizar el total de la factura
         $cotizacione->update(['total' => (int)$total]);
 
-        return redirect()->route('cotizacione.index', $cotizacione->id)->with('success', 'Cotización creada exitosamente.');
+        return redirect()->route('cotizaciones.index', $cotizacione->id)->with('success', 'Cotización creada exitosamente.');
     }
 
     /**
