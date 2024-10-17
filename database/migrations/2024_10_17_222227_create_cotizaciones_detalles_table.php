@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cotizacione_detalles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cotizacion_id')->constrained('cotizaciones')->onDelete('cascade');
+            $table->foreignId('cotizacione_id')->constrained('cotizaciones')->onDelete('cascade');
             $table->integer('cantidad');
             $table->string('descripcion');
             $table->bigInteger('precio_unitario');
