@@ -1,29 +1,193 @@
-@extends('layouts.app')
-
-@section('template_title')
-    {{ $cotizacione->name ?? __('Show') . " " . __('Cotizacione') }}
-@endsection
-
-@section('content')
-    <section class="content container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-                        <div class="float-left">
-                            <span class="card-title">{{ __('Show') }} Cotizacione</span>
+<x-app-layout>
+    <section class="content">
+        <div class="container-xxl flex-grow-1 container-p-y d-flex flex-column" style="min-height: 100vh;">
+            <div class="row flex-grow-1">
+                <div class="col-xl d-flex flex-column">
+                    <div class="card flex-grow-1 d-flex flex-column">
+                        <div class="card-header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div class="float-left">
+                                    <h5 class="card-title">Editar Cotización</h5>
+                                </div>
+                                <div class="float-right">
+                                    <a class="btn btn-outline-danger" href="{{ route('cotizaciones.index') }}">
+                                        {{ __('Back') }}</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="float-right">
-                            <a class="btn btn-primary btn-sm" href="{{ route('cotizaciones.index') }}"> {{ __('Back') }}</a>
+
+                        <div class="card-body bg-white">
+
+                            <form id="invoice-form" action="{{ route('cotizaciones.update', $cotizacione->id) }}"
+                                method="POST">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="user_id" class="form-label">User</label>
+                                            <select name="user_id" id="user_id"
+                                                class="form-control @error('user_id') is-invalid @enderror" disabled>
+                                                <option value="">Select a user</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}"
+                                                        {{ $user->id == $cotizacione->user_id ? 'selected' : '' }}>
+                                                        {{ $user->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            {!! $errors->first('user_id', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="nombre" class="form-label">Nombre</label>
+                                            <input type="text" name="nombre" id="nombre"
+                                                class="form-control"  value="{{ $user->name }}" readonly />
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" name="user_id" id="user_id" />
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="apellidos" class="form-label">Apellidos</label>
+                                            <input type="text" name="apellidos" id="apellidos"
+                                            class="form-control"  value="{{ $user->apellidos }}" readonly />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="barrio" class="form-label">Barrio</label>
+                                            <input type="text" name="barrio" id="barrio"
+                                            class="form-control"  value="{{ $user->barrio }}" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="direccion" class="form-label">Dirección</label>
+                                            <input type="text" name="direccion" id="direccion"
+                                            class="form-control"  value="{{ $user->direccion }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="ciudad" class="form-label">Ciudad</label>
+                                            <input type="text" name="ciudad" id="ciudad"
+                                            class="form-control"  value="{{ $user->ciudad }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="departamento" class="form-label">Departamento</label>
+                                            <input type="text" name="departamento" id="departamento"
+                                            class="form-control"  value="{{ $user->departamento }}" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="cedula" class="form-label">Cédula</label>
+                                            <input type="text" name="cedula" id="cedula"
+                                            class="form-control"  value="{{ $user->cedula }}" readonly/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row padding-1 p-1">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="fecha" class="form-label">Date</label>
+                                            <input type="date" name="fecha" id="fecha"
+                                                class="form-control @error('fecha') is-invalid @enderror"
+                                                value="{{ old('fecha', $cotizacione->fecha) }}" disabled />
+                                            {!! $errors->first('fecha', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2 mb20">
+                                            <label for="nota" class="form-label">Note</label>
+                                            <textarea name="nota" id="nota" class="form-control @error('nota') is-invalid @enderror"
+                                                placeholder="Enter notes or instructions"disabled>{{ old('nota', $cotizacione->nota) }}</textarea>
+                                            {!! $errors->first('nota', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Details -->
+                                <h5>Invoice Details</h5>
+                                <div id="details-container">
+                                    @foreach ($cotizacione->detalles as $index => $detalle)
+                                        <div class="row padding-1 p-1">
+                                            <div class="col-md-3">
+                                                <div class="form-group mb-2 mb20">
+                                                    <input type="number"
+                                                        name="detalles[{{ $index }}][cantidad]"
+                                                        class="form-control @error('detalles.{{ $index }}.cantidad') is-invalid @enderror"
+                                                        placeholder="Quantity"
+                                                        value="{{ old('detalles.' . $index . '.cantidad', $detalle->cantidad) }}"
+                                                        disabled />
+                                                    {!! $errors->first(
+                                                        'detalles.' . $index . '.cantidad',
+                                                        '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
+                                                    ) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group mb-2 mb20">
+                                                    <input type="text"
+                                                        name="detalles[{{ $index }}][descripcion]"
+                                                        class="form-control @error('detalles.{{ $index }}.descripcion') is-invalid @enderror"
+                                                        placeholder="Description"
+                                                        value="{{ old('detalles.' . $index . '.descripcion', $detalle->descripcion) }}"
+                                                        disabled />
+                                                    {!! $errors->first(
+                                                        'detalles.' . $index . '.descripcion',
+                                                        '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
+                                                    ) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group mb-2 mb20">
+                                                    <input type="number"
+                                                        name="detalles[{{ $index }}][precio_unitario]"
+                                                        class="form-control @error('detalles.{{ $index }}.precio_unitario') is-invalid @enderror"
+                                                        placeholder="Unit Price"
+                                                        value="{{ old('detalles.' . $index . '.precio_unitario', $detalle->precio_unitario) }}"
+                                                        disabled />
+                                                    {!! $errors->first(
+                                                        'detalles.' . $index . '.precio_unitario',
+                                                        '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
+                                                    ) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group mb-2 mb20">
+                                                    <input type="text"
+                                                        name="detalles[{{ $index }}][precio_total]"
+                                                        class="form-control" placeholder="Total Price"
+                                                        value="{{ old('detalles.' . $index . '.precio_total', $detalle->precio_total) }}"
+                                                        disabled />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <div class="mt-3">
+                                    <strong>Total: </strong><span id="total-amount">{{ $cotizacione->total }}</span>
+                                </div>
+                            </form>
+
                         </div>
-                    </div>
-
-                    <div class="card-body bg-white">
-                        
-
                     </div>
                 </div>
             </div>
-        </div>
     </section>
-@endsection
+</x-app-layout>

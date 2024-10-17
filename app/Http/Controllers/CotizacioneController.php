@@ -91,11 +91,11 @@ class CotizacioneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id): View
+    public function show(Cotizacione $cotizacione): View
     {
-        $cotizacione = Cotizacione::find($id);
-
-        return view('cotizacione.show', compact('cotizacione'));
+        $cotizacione->load('detalles');
+        $users = \App\Models\User::all();
+        return view('cotizacione.show', compact('cotizacione', 'users'));
     }
 
     /**
