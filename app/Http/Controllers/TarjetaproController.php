@@ -45,7 +45,7 @@ class TarjetaproController extends Controller
         Tarjetapro::create($request->validated());
 
         return Redirect::route('tarjetapros.index')
-            ->with('success', 'Tecnico Creado con Exito.');
+            ->with('success', 'Tarjeta profesional Creada con Exito.');
     }
 
     /**
@@ -78,7 +78,7 @@ class TarjetaproController extends Controller
         $tarjetapro->update($request->validated() + ['user_id' => $request->user_id]);
 
         return Redirect::route('tarjetapros.index')
-            ->with('success', 'Tecnico Actualizado con exito.');
+            ->with('success', 'Tarjeta profesional Actualizada con exito.');
     }
 
     public function destroy($id): RedirectResponse
