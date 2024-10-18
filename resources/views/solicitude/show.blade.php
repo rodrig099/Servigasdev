@@ -18,7 +18,7 @@
 
                             <div class="form-group mb-2 mb20">
                                 <strong>Número de solicitud:</strong>
-                                {{ $solicitude->tiposolicitudes_id }}
+                                {{ $solicitude->id }}
                             </div>
                             <div class="form-group mb-2 mb20">
                                 <strong>Descripcion:</strong>
