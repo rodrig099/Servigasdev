@@ -101,22 +101,62 @@ class CotizacioneController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id): View
+    public function edit(Cotizacione $cotizacione): View
     {
-        $cotizacione = Cotizacione::find($id);
-
-        return view('cotizacione.edit', compact('cotizacione'));
+        // Eager load the detalles relationship
+        $cotizacione->load('detalles');
+        $users = \App\Models\User::all(); // Obtener todos los usuarios
+        return view('cotizacione.edit', compact('cotizacione', 'users'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CotizacioneRequest $request, Cotizacione $cotizacione): RedirectResponse
+    public function update(CotizacioneRequest $request, Cotizacione $cotizacione)
     {
-        $cotizacione->update($request->validated());
+        // Validación de datos
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'fecha' => 'required|date',
+            'detalles' => 'required|array',
+            'detalles.*.cantidad' => 'required|numeric|min:1',
+            'detalles.*.descripcion' => 'required|string',
+            'detalles.*.precio_unitario' => 'required|string',
+        ]);
 
-        return Redirect::route('cotizaciones.index')
-            ->with('success', 'Cotizacione updated successfully');
+        // Actualizar la factura
+        $cotizacione->update([
+            'user_id' => $request->input('user_id'),
+            'fecha' => $request->input('fecha'),
+            'nota' => $request->input('nota'),
+        ]);
+
+        // Eliminar detalles existentes
+        $cotizacione->detalles()->delete();
+
+        // Crear nuevos detalles
+        $total = 0;
+        $detalles = $request->input('detalles', []);
+
+        foreach ($detalles as $detalle) {
+            $cantidad = $detalle['cantidad'] ?? 0;
+            $precioUnitario = (float)str_replace('.', '', $detalle['precio_unitario'] ?? 0);
+            $precioTotal = $cantidad * $precioUnitario;
+            $total += $precioTotal;
+
+            CotizacioneDetalle::create([
+                'cotizacione_id' => $cotizacione->id,
+                'cantidad' => $cantidad,
+                'descripcion' => $detalle['descripcion'] ?? '',
+                'precio_unitario' => $precioUnitario,
+                'precio_total' => $precioTotal,
+            ]);
+        }
+
+        // Actualizar el total de la cotizacion
+        $cotizacione->update(['total' => (int)$total]);
+
+        return redirect()->route('cotizaciones.index')->with('success', 'cotización actualizada exitosamente.');
     }
 
     public function destroy($id): RedirectResponse

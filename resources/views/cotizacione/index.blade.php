@@ -17,7 +17,7 @@
                         </div>
                     @endif
 
-                    <div class="container mb-3">
+                    <div class="container mb-3 flex-grow-1 d-flex flex-column">
                         <!-- Search -->
                     <div class="navbar-nav">
                         <div class="nav-item d-flex align-items-center">
