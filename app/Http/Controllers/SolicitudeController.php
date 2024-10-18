@@ -56,8 +56,9 @@ class SolicitudeController extends Controller
         $tiposolicitude = Tiposolicitude::all('nombreTipo', 'id');
 
         $user = User::all('name', 'id');
+        $tecnicos = User::role('Tecnico')->get(['name', 'id']);
 
-        return view('solicitude.create', compact('solicitude', 'tiposolicitude', 'user'));
+        return view('solicitude.create', compact('solicitude', 'tiposolicitude', 'user', 'tecnicos'));
     }
 
     /**
@@ -65,7 +66,26 @@ class SolicitudeController extends Controller
      */
     public function store(SolicitudeRequest $request)
     {
-        Solicitude::create($request->validated());
+        /*$tecnico = User::role('Tecnico')->first();
+
+        // Crea la solicitud y asigna el técnico encontrado
+        Solicitude::create(array_merge($request->validated(), ['tecnico_id' => $tecnico->id]));
+
+        //Solicitude::create($request->validated());*/
+        $tecnicos = User::role('Tecnico')->get(['name', 'id']);
+
+        // Verificar si hay técnicos disponibles
+        if ($tecnicos->isEmpty()) {
+            return redirect()->route('solicitudes.index')
+                ->with('error', 'No hay técnicos disponibles para asignar. De momento no podemos atender tu solicitud.');
+        }
+
+        // Seleccionar un técnico aleatorio
+        $tecnico = $tecnicos->random();
+
+        // Crea la solicitud y asigna el técnico encontrado
+        Solicitude::create(array_merge($request->validated(), ['tecnico_id' => $tecnico->id]));
+
 
         return redirect()->route('solicitudes.index')
             ->with('success', 'Solicitude created successfully.');

@@ -55,6 +55,8 @@ Route::middleware([
     Route::resource('users', UserController::class)->middleware('auth');
     Route::resource('tarjetapros', TarjetaproController::class)->middleware('auth');
 
+
+    ////gestor Archivos/////
     Route::middleware(['auth'])->group(function () {
         Route::get('/files', [FileController::class, 'index'])->name('files.index');
         Route::get('/files/create', [FileController::class, 'create'])->name('files.create');

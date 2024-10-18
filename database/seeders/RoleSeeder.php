@@ -42,6 +42,5 @@ class RoleSeeder extends Seeder
         Permission::create(["name" => "Admin.cotizaciones.edit"])->assignRole([$role1]);
         Permission::create(["name" => "Admin.cotizaciones.destroy"])->assignRole([$role1]);
 
-
     }
 }

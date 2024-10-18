@@ -30,7 +30,7 @@ class Solicitude extends Model
      *
      * @var array
      */
-    protected $fillable = ['users_id', 'tiposolicitudes_id', 'descripcion', 'estatus'];
+    protected $fillable = ['users_id', 'tiposolicitudes_id', 'descripcion', 'estatus', 'tecnico_id'];
 
 
     /**
@@ -44,6 +44,11 @@ class Solicitude extends Model
     public function User()
     {
         return $this->belongsTo(\App\Models\User::class, 'users_id', 'id');
+    }
+
+    public function tecnico()
+    {
+        return $this->belongsTo(User::class, 'tecnico_id');
     }
 
 
