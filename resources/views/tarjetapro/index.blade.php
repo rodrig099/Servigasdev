@@ -12,84 +12,82 @@
                         </div>
                     </div>
 
-                    <div class="container mb-3">
+                    <div class="container mb-3 flex-grow-1 d-flex flex-column">
                         <!-- Search -->
-                    <div class="navbar-nav">
-                        <div class="nav-item d-flex align-items-center">
-                            <i class="bx bx-search fs-4 lh-0"></i>
-                            <input
-                                type="text"
-                                class="form-control border-0 shadow-none"
-                                placeholder="Buscar..."
-                                aria-label="Search..." />
+                        <div class="navbar-nav">
+                            <div class="nav-item d-flex align-items-center">
+                                <i class="bx bx-search fs-4 lh-0"></i>
+                                <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar..."
+                                    aria-label="Search..." />
+                            </div>
                         </div>
-                    </div>
-                    <!-- /Search -->
+                        <!-- /Search -->
 
-                    @if ($message = Session::get('success'))
-                        <div class="alert alert-success m-4">
-                            <p>{{ $message }}</p>
-                        </div>
-                    @endif
+                        @if ($message = Session::get('success'))
+                            <div class="alert alert-success m-4">
+                                <p>{{ $message }}</p>
+                            </div>
+                        @endif
 
-                    <div class="card-body bg-white">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
-                                    <tr>
-                                        <th>No</th>
-
-                                        <th>Nombre</th>
-                                        <th>Apellidos</th>
-                                        <th>Codigo</th>
-                                        <th>Expedido</th>
-                                        <th>Vigencia</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($tarjetapros as $tarjetapro)
+                            <div class="table-responsive text-nowrap flex-grow-1">
+                                <table class="table table-striped">
+                                    <thead>
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <th>No</th>
 
-                                            <td>{{ $tarjetapro->user->name }}</td>
-                                            <td>{{ $tarjetapro->user->apellidos }}</td>
-                                            <td>{{ $tarjetapro->codigo }}</td>
-                                            <td>{{ $tarjetapro->expedido }}</td>
-                                            <td>{{ $tarjetapro->vigencia }}</td>
-
-                                            <td>
-                                                <div class="dropdown">
-                                                    <form action="{{ route('tarjetapros.destroy', $tarjetapro->id) }}"
-                                                        method="POST">
-                                                        <button type="button"
-                                                            class="btn p-0 dropdown-toggle hide-arrow"
-                                                            data-bs-toggle="dropdown">
-                                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('tarjetapros.show', $tarjetapro->id) }}">
-                                                                <i class="bx bx-show-alt me-1"></i> Ver
-                                                            </a>
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('tarjetapros.edit', $tarjetapro->id) }}">
-                                                                <i class="bx bx-edit-alt me-1"></i> Editar
-                                                            </a>
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                                onclick="event.preventDefault(); showDeleteModal({{ $tarjetapro->id }});">
-                                                                <i class="bx bx-trash me-1"></i> Eliminar
-                                                            </a>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </td>
+                                            <th>Nombre</th>
+                                            <th>Apellidos</th>
+                                            <th>Codigo</th>
+                                            <th>Expedido</th>
+                                            <th>Vigencia</th>
+                                            <th></th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($tarjetapros as $tarjetapro)
+                                            <tr>
+                                                <td>{{ ++$i }}</td>
+
+                                                <td>{{ $tarjetapro->user->name }}</td>
+                                                <td>{{ $tarjetapro->user->apellidos }}</td>
+                                                <td>{{ $tarjetapro->codigo }}</td>
+                                                <td>{{ $tarjetapro->expedido }}</td>
+                                                <td>{{ $tarjetapro->vigencia }}</td>
+
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <form
+                                                            action="{{ route('tarjetapros.destroy', $tarjetapro->id) }}"
+                                                            method="POST">
+                                                            <button type="button"
+                                                                class="btn p-0 dropdown-toggle hide-arrow"
+                                                                data-bs-toggle="dropdown">
+                                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('tarjetapros.show', $tarjetapro->id) }}">
+                                                                    <i class="bx bx-show-alt me-1"></i> Ver
+                                                                </a>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('tarjetapros.edit', $tarjetapro->id) }}">
+                                                                    <i class="bx bx-edit-alt me-1"></i> Editar
+                                                                </a>
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                                    onclick="event.preventDefault(); showDeleteModal({{ $tarjetapro->id }});">
+                                                                    <i class="bx bx-trash me-1"></i> Eliminar
+                                                                </a>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

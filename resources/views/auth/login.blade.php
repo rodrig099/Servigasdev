@@ -39,7 +39,7 @@
                                 class="form-control"
                                 id="email"
                                 name="email"
-                                placeholder="Enter your email or username"
+                                placeholder="Ingresa tu Email"
                                 autofocus />
                         </div>
                         <div class="mb-3 form-password-toggle">

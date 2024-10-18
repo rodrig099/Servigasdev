@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CotizacioneController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\SolicitudeController;
@@ -11,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
+use App\Models\Cotizacione;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
@@ -34,6 +36,7 @@ Route::middleware([
         return view('solicitude.show');
     })->name('solicitude');
     Route::resource('facturas', FacturaController::class)->middleware('auth');
+    Route::resource('cotizaciones', CotizacioneController::class)->middleware('auth');
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
     Route::get('/usuarios/{user}/index', [UsuarioController::class, 'index'])->name('usuario.user.index')->middleware('auth');
