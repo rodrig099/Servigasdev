@@ -15,6 +15,7 @@
         <a href="{{ route('files.index') }}" class="btn btn-secondary">Volver a la Lista de Carpetas</a>
     </div>
 
+
     <!-- Formulario para subir archivo en la carpeta actual -->
     <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
         @csrf

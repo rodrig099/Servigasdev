@@ -59,9 +59,13 @@ Route::middleware([
         Route::get('/files/{id}/download', [FileController::class, 'download'])->name('files.download');
         Route::delete('/files/{id}', [FileController::class, 'destroy'])->name('files.destroy');
         Route::get('/files/folder/{folder_name}', [FileController::class, 'show'])->name('files.show');
+        Route::get('/files/{file}', [FileController::class, 'show'])->name('files.show');
         Route::get('/files/{id}', [FileController::class, 'getFile'])->name('files.getFile');
         Route::delete('/folders/{id}', [FileController::class, 'destroyFolder'])->name('folders.destroy');
         Route::patch('/folders/{id}/rename', [FileController::class, 'renameFolder'])->name('folders.rename');
+        Route::post('/files/create-folder', [FileController::class, 'createFolder'])->name('files.create.folder');
+        Route::post('/files/upload/{folderName}/{subfolderName}', [FileController::class, 'uploadFile'])->name('files.upload');
+        Route::get('/files/folder/{folder_name}', [FileController::class, 'showFolderContents'])->name('files.showFolder');
     });
 
     Route::get('/roles-permissions', function () {

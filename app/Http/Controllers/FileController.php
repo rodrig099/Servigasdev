@@ -50,6 +50,7 @@ class FileController extends Controller
         $request->validate([
             'file' => 'required|mimes:pdf|max:3048',
             'folder_name' => 'nullable|string|max:255',
+            'subfolder_name' => 'nullable|string|max:255', // Validar el nombre de la subcarpeta
             'existing_folder' => 'nullable|integer|exists:folders,id',
         ]);
 
@@ -75,6 +76,23 @@ class FileController extends Controller
 
             // Crear la carpeta en el sistema de archivos
             Storage::disk('public')->makeDirectory('files/' . $folderName);
+
+            // Crear la subcarpeta si se proporcionó un nombre
+            if ($request->input('subfolder_name')) {
+                $subfolderName = $request->input('subfolder_name');
+
+                // Verificar si ya existe una subcarpeta con ese nombre
+                if (Storage::disk('public')->exists('files/' . $folderName . '/' . $subfolderName)) {
+                    return redirect()->back()->with('error', 'Ya existe una subcarpeta con ese nombre.');
+                }
+
+                // Crear la subcarpeta en el sistema de archivos
+                Storage::disk('public')->makeDirectory('files/' . $folderName . '/' . $subfolderName);
+
+                // Redirigir a la subcarpeta después de su creación
+                return redirect()->route('files.show', $subfolderName)
+                    ->with('success', 'Carpeta y subcarpeta creadas exitosamente.');
+            }
         } else {
             return redirect()->back()->with('error', 'Debes seleccionar una carpeta existente o crear una nueva.');
         }
@@ -132,8 +150,6 @@ class FileController extends Controller
 
         return redirect()->route('files.index')->with('success', 'Archivo eliminado exitosamente.');
     }
-
-
 
     ////////seccion eliminar carpetas////////
     public function destroyFolder($id)

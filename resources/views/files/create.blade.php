@@ -3,63 +3,94 @@
         <div class="row flex-grow-1">
             <div class="col-xl d-flex flex-column">
                 <div class="card flex-grow-1 d-flex flex-column">
+
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5>Subir un archivo PDF</h5>
+                        <h5>crear Carpeta</h5>
                     </div>
 
                     @if (session('success'))
                         <div class="alert alert-success m-4">
                             {{ session('success') }}
                         </div>
+                    @elseif (session('error'))
+                        <div class="alert alert-danger m-4">
+                            {{ session('error') }}
+                        </div>
                     @endif
 
                     <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data" class="m-4">
                         @csrf
 
-                        <!-- Campo para seleccionar carpeta existente -->
-                        <div class="form-group">
-                            <label for="existing_folder">Seleccionar carpeta existente:</label>
-                            <select name="existing_folder" class="form-control" id="existing_folder">
-                                <option value="">-- Seleccionar carpeta --</option>
-                                @foreach ($carpetas as $carpeta)
-                                    <option value="{{ $carpeta->id }}">{{ $carpeta->folder_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <!-- Campo para crear nueva carpeta -->
-                        <div class="form-group mt-3">
-                            <label for="folder_name">Crear una nueva carpeta:</label>
-                            <input type="text" name="folder_name" class="form-control" id="folder_name"
-                                placeholder="Nombre de la carpeta">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="file">Seleccionar archivo PDF:</label>
-                            <input type="file" name="file" class="form-control" accept="application/pdf"
-                                id="file" required>
-                        </div>
-
-                        <!-- Vista previa del archivo -->
-                        <div id="preview-container" class="preview-container" style="display: none; margin-top: 20px;">
-                            <h5 class="text-center">Vista Previa:</h5>
-                            <div class="card shadow-sm rounded" style="max-width: 100%;">
-                                <div class="card-body">
-                                    <embed id="file-preview" src="" width="100%" height="400px"
-                                        class="rounded" />
+                        <div class="row padding-1 p-1">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2 mb20">
+                                    <label for="search_cedula" class="form-label">Buscar Usuario por Cédula</label>
+                                    <div class="input-group">
+                                        <input type="text" name="search_cedula" id="search_cedula"
+                                            class="form-control @error('search_cedula') is-invalid @enderror"
+                                            placeholder="Ingrese el número de cédula" />
+                                        <button type="button" id="search-button"
+                                            class="btn btn-primary">Buscar</button>
+                                    </div>
+                                    {!! $errors->first(
+                                        'search_cedula',
+                                        '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>',
+                                    ) !!}
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <div class="row mb-3">
-                            <div class="col-auto">
-                                <button type="submit" class="btn btn-success">Subir Archivo</button>
+
+                        <div class="row padding-1 p-1">
+                            <div class="col-md-6">
+                                <div class="form-group mb-2 mb20">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" name="nombre" id="nombre"
+                                        class="form-control @error('nombre') is-invalid @enderror"
+                                        placeholder="Nombre del usuario" disabled />
+                                    {!! $errors->first('nombre', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <a href="{{ route('files.index') }}" class="btn btn-secondary">Volver a la Lista de
-                                    Carpetas</a>
+
+                            <input type="hidden" name="user_id" id="user_id" />
+
+                            <div class="col-md-6">
+                                <div class="form-group mb-2 mb20">
+                                    <label for="apellidos" class="form-label">Apellidos</label>
+                                    <input type="text" name="apellidos" id="apellidos"
+                                        class="form-control @error('apellidos') is-invalid @enderror"
+                                        placeholder="Apellidos del usuario" disabled />
+                                    {!! $errors->first('apellidos', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                                </div>
                             </div>
-                        </div>
+
+                            <!-- Campo para crear nueva carpeta -->
+                            <div class="form-group mt-3">
+                                <label for="folder_name">Nombre de la Carpeta:</label>
+                                <input type="text" name="folder_name" class="form-control" id="folder_name"
+                                    placeholder="Nombre de la carpeta" readonly required>
+                            </div>
+
+                            <!-- Campo para crear subcarpeta -->
+                            <div class="form-group mt-3">
+                                <label for="subfolder_name">Crear Subcarpeta:</label>
+                                <input type="text" name="subfolder_name" class="form-control" id="subfolder_name"
+                                    placeholder="Nombre de la subcarpeta">
+                            </div>
+
+                            <!-- Campo para subir el archivo PDF -->
+                            <div class="form-group mt-3">
+                                <label for="file">Seleccionar Archivo PDF:</label>
+                                <input type="file" name="file"
+                                    class="form-control @error('file') is-invalid @enderror" id="file" required>
+                                {!! $errors->first('file', '<div class="invalid-feedback" role="alert"><strong>:message</strong></div>') !!}
+                            </div>
+
+                            <br>
+                            <div class="form-group mt-3">
+                                <button type="submit" id="create_folder_btn" class="btn btn-primary">Crear Carpeta y
+                                    Subir Archivo</button>
+                            </div>
+
                     </form>
 
                 </div>
@@ -68,18 +99,31 @@
     </div>
 
     <script>
-        // Función para mostrar la vista previa del archivo
-        document.getElementById('file').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const previewContainer = document.getElementById('preview-container');
-            const filePreview = document.getElementById('file-preview');
+        document.getElementById('search_cedula').addEventListener('blur', function() {
+            const cedula = this.value;
+            if (cedula) {
+                fetch(`/api/users/${cedula}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            document.getElementById('nombre').value = data.nombre;
+                            document.getElementById('apellidos').value = data.apellidos;
+                            document.getElementById('user_id').value = data.id;
 
-            if (file) {
-                const fileURL = URL.createObjectURL(file);
-                filePreview.src = fileURL;
-                previewContainer.style.display = 'block';
-            } else {
-                previewContainer.style.display = 'none';
+                            // Concatenar cédula, nombre y apellidos para el nombre de la carpeta
+                            const folderName = `${cedula} - ${data.nombre} ${data.apellidos}`;
+                            document.getElementById('folder_name').value = folderName;
+
+                            // Limpiar el nombre de la subcarpeta para permitir la entrada manual
+                            document.getElementById('subfolder_name').value = '';
+                        } else {
+                            alert('Usuario no encontrado');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user:', error);
+                        alert('Error al buscar el usuario');
+                    });
             }
         });
     </script>
