@@ -153,6 +153,18 @@
                 </li>
             </ul>
         </li>
+        <li class="menu-item {{ request()->is('insyalaciones') ? 'active' : '' }}">
+            <a href="{{ url('instalaciones') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-building-house"></i>
+                <div data-i18n="Analytics">Instalaciones</div>
+            </a>
+        </li>
+        <li class="menu-item {{ request()->is('certificaciones') ? 'active' : '' }}">
+            <a href="{{ url('certificaciones') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Analytics">Certificaciones</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->is('users') ? 'active' : '' }}">
             <a href="{{ url('/users') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-group"></i>
@@ -161,7 +173,7 @@
         </li>
         <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}">
             <a href="{{ url('usuarios') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-building-house"></i>
+                <i class="menu-icon tf-icons bx bx-briefcase"></i>
                 <div data-i18n="Analytics">Roles y Permisos</div>
             </a>
         </li>
@@ -174,7 +186,6 @@
         @endhasrole
 
         @hasrole('Admin|Tecnico|Usuario')
-        <li class="menu-item {{ request()->is('usuarios') ? 'active' : '' }}"></li>
         <li class="menu-item {{ request()->is('files') ? 'active' : '' }}">
             <a href="{{ url('files') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-archive"></i>
