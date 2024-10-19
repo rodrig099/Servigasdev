@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CertificationController;
 use App\Http\Controllers\CotizacioneController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacturaController;
@@ -35,8 +36,12 @@ Route::middleware([
     Route::get('/solicitude', function () {
         return view('solicitude.show');
     })->name('solicitude');
+    //Facturas
     Route::resource('facturas', FacturaController::class)->middleware('auth');
+    //Cotizaciones
     Route::resource('cotizaciones', CotizacioneController::class)->middleware('auth');
+    //Certificaciones
+    Route::resource('certifications', CertificationController::class)->middleware('auth');
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');
     Route::get('/usuarios/{user}/update', [UsuarioController::class, 'update'])->name('usuario.user.update')->middleware('auth');
     Route::get('/usuarios/{user}/index', [UsuarioController::class, 'index'])->name('usuario.user.index')->middleware('auth');

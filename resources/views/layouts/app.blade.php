@@ -159,8 +159,8 @@
                 <div data-i18n="Analytics">Instalaciones</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->is('certificaciones') ? 'active' : '' }}">
-            <a href="{{ url('certificaciones') }}" class="menu-link">
+        <li class="menu-item {{ request()->is('certifications') ? 'active' : '' }}">
+            <a href="{{ url('certifications') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Analytics">Certificaciones</div>
             </a>
