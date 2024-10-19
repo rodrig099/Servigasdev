@@ -21,7 +21,9 @@ class SolicitudeController extends Controller
     public function __construct()
     {
 
-        //$this->middleware('role:Admin.solicitudes.index');
+        $this->middleware('can:Admin.solicitudes.index')->only('create');
+        //$this->middleware('can:Admin.tiposolicitudes.edit')->only('edit');
+        $this->middleware('can:Tecnico.solicitudes.edit')->only('edit');
 
     }
 

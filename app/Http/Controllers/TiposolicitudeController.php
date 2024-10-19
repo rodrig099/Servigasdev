@@ -16,7 +16,11 @@ class TiposolicitudeController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('can:Admin.tiposolicitudes.index')->only('index');
+        $this->middleware('can:Admin.tiposolicitudes.create')->only('create');
+        $this->middleware('can:Admin.tiposolicitudes.edit')->only('edit');
+        $this->middleware('can:Admin.tiposolicitudes.destroy')->only('destroy');
+
     }
 
     /**

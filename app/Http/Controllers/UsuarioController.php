@@ -11,6 +11,15 @@ use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('can:Admin.usuarios.index')->only('index');
+        $this->middleware('can:Admin.usuarios.create')->only('create');
+        $this->middleware('can:Admin.usuarios.edit')->only('edit');
+        $this->middleware('can:Admin.usuarios.destroy')->only('destroy');
+
+    }
 
     /**
      * Display a listing of the resource.

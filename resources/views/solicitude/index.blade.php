@@ -88,10 +88,12 @@
                                                             href="{{ route('solicitudes.show', $solicitude->id) }}">
                                                             <i class="bx bx-show-alt me-1"></i> Ver
                                                         </a>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('solicitudes.edit', $solicitude->id) }}">
-                                                            <i class="bx bx-edit-alt me-1"></i> Editar
-                                                        </a>
+                                                        @hasanyrole('Admin|Tecnico')
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('solicitudes.edit', $solicitude->id) }}">
+                                                                <i class="bx bx-edit-alt me-1"></i> Editar
+                                                            </a>
+                                                        @endhasanyrole
                                                         @hasanyrole('Admin|Usuario')
                                                             @csrf
                                                             @method('DELETE')

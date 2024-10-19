@@ -90,7 +90,7 @@ class FileController extends Controller
                 Storage::disk('public')->makeDirectory('files/' . $folderName . '/' . $subfolderName);
 
                 // Redirigir a la subcarpeta después de su creación
-                return redirect()->route('files.show', $subfolderName)
+                return redirect()->route('files.showSubfolder', [$folder->folder_name, $subfolderName])
                     ->with('success', 'Carpeta y subcarpeta creadas exitosamente.');
             }
         } else {
@@ -196,7 +196,6 @@ class FileController extends Controller
         return redirect()->route('files.index')->with('success', 'Nombre de la carpeta cambiado exitosamente.');
     }
 
-
     ////////seccion ver carpetas y archivos////////
     public function show($folder_name)
     {
@@ -206,6 +205,83 @@ class FileController extends Controller
         return view('files.show', compact('archivos', 'folder_name', 'folder'));
     }
 
+
+    /////////seccion ver subcarpeta//////////
+    public function showSubfolder($folder_name, $subfolder_name)
+    {
+        // Obtener la carpeta y subcarpeta
+        $folder = Folder::where('folder_name', $folder_name)->first();
+
+        if (!$folder) {
+            return redirect()->route('files.index')->with('error', 'Carpeta no encontrada.');
+        }
+
+        // Obtener archivos de la subcarpeta
+        $files = File::where('folder_id', $folder->id)
+            ->where('path', 'LIKE', 'files/' . $folder_name . '/' . $subfolder_name . '%')
+            ->get();
+
+        return view('files.subfolder', compact('folder', 'subfolder_name', 'files'));
+    }
+
+
+    public function uploadFile(Request $request, $folderName, $subfolderName)
+    {
+        // Validar la entrada
+        $request->validate([
+            'file' => 'required|mimes:pdf|max:3048',
+        ]);
+
+        // Verificar si el nombre de la carpeta y subcarpeta están vacíos
+        if (empty($folderName) || empty($subfolderName)) {
+            return redirect()->back()->with('error', 'El nombre de la carpeta o subcarpeta no puede estar vacío.');
+        }
+
+        // Buscar la carpeta utilizando el nombre
+        $folder = Folder::where('folder_name', $folderName)->first();
+
+        if (!$folder) {
+            return redirect()->back()->with('error', 'La carpeta no existe.');
+        }
+
+        // Define la ruta donde se guardará el archivo
+        $filePath = 'files/' . $folderName . '/' . $subfolderName; // Asegúrate de que esto esté correcto
+
+        // Obtener el archivo del request
+        $file = $request->file('file');
+        $fileName = $file->getClientOriginalName();
+
+        // Guardar el archivo en el sistema de archivos
+        $file->storeAs($filePath, $fileName, 'public');
+
+        // Guardar la información del archivo en la base de datos
+        File::create([
+            'name' => $fileName,
+            'path' => $filePath . '/' . $fileName,
+            'mime_type' => $file->getMimeType(),
+            'folder_id' => $folder->id, // Obtener el ID de la carpeta
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('files.show', [$folderName, $subfolderName])
+            ->with('success', 'Archivo subido exitosamente.');
+    }
+
+    public function storeSubfolder(Request $request)
+    {
+        $request->validate([
+            'subfolder_name' => 'required|string|max:255',
+            'parent_folder_id' => 'required|exists:folders,id', // Asegúrate de que `folders` sea el nombre correcto de la tabla
+        ]);
+
+        // Crea la subcarpeta
+        $subfolder = new Folder(); // Asegúrate de tener el modelo correcto
+        $subfolder->name = $request->subfolder_name;
+        $subfolder->parent_id = $request->parent_folder_id; // Asumiendo que tienes una columna para la carpeta padre
+        $subfolder->save();
+
+        return redirect()->route('files.show', $request->parent_folder_id)->with('success', 'Subcarpeta creada exitosamente.');
+    }
 
     public function getFile($id)
     {

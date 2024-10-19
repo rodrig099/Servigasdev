@@ -15,7 +15,6 @@
         <a href="{{ route('files.index') }}" class="btn btn-secondary">Volver a la Lista de Carpetas</a>
     </div>
 
-
     <!-- Formulario para subir archivo en la carpeta actual -->
     <form action="{{ route('files.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -49,7 +48,6 @@
                         </td>
                         <td>{{ \Carbon\Carbon::parse($archivo->created_at)->setTimezone('America/Bogota')->isoFormat('dddd, MMMM Do YYYY, h:mm a') }}
                         </td>
-                        <!-- Ejemplo: "Lunes, Octubre 14th 2024, 3:45:32 pm" en hora local de Bogotá -->
                         <td>
                             <button class="btn btn-warning btn-sm preview-btn" data-file-id="{{ $archivo->id }}"
                                 data-bs-toggle="modal" data-bs-target="#previewModal">Ver</button>
@@ -92,8 +90,6 @@
         document.querySelectorAll('.preview-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const fileId = this.getAttribute('data-file-id');
-
-                // Hacer una solicitud AJAX para obtener la URL del archivo
                 fetch(`/files/${fileId}`)
                     .then(response => response.json())
                     .then(data => {
