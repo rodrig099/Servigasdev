@@ -98,3 +98,7 @@ Route::get('/payment-success', function () {
 Route::get('/payment-failed', function () {
     return 'Payment failed. Please try again.';
 })->name('payment.failed');
+
+
+Route::post('/payment-confirmation', [PaymentController::class, 'confirmPayment'])->name('payment.confirmation');
+Route::get('/facturas/{id}/check-payment', [FacturaController::class, 'checkPaymentStatus']);

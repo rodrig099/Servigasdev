@@ -12,7 +12,7 @@
                         </div>
                     </div>
 
-                    <div class="container mb-3 text-nowrap flex-grow-1">
+                    <div class="container mb-3 flex-grow-1 d-flex flex-column">
                         <!-- Search -->
                     <div class="navbar-nav">
                         <div class="nav-item d-flex align-items-center">
@@ -41,7 +41,7 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
+                            <tbody>
                                 @foreach ($tiposolicitudes as $tiposolicitude)
                                     <tr>
                                         <td>{{ ++$i }}</td>
