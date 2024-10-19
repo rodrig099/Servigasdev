@@ -1,10 +1,5 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('template_title')
-    {{ __('Update') }} Certification
-@endsection
-
-@section('content')
     <section class="content container-fluid">
         <div class="">
             <div class="col-md-12">
@@ -26,4 +21,4 @@
             </div>
         </div>
     </section>
-@endsection
+</x-app-layout>

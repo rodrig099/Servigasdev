@@ -6,6 +6,7 @@ use App\Models\Certification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\CertificationRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
@@ -16,7 +17,7 @@ class CertificationController extends Controller
      */
     public function index(Request $request): View
     {
-        $certifications = Certification::paginate();
+        $certifications = Certification::paginate(10);
 
         return view('certification.index', compact('certifications'))
             ->with('i', ($request->input('page', 1) - 1) * $certifications->perPage());

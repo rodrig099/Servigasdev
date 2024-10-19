@@ -1,10 +1,5 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('template_title')
-    {{ $certification->name ?? __('Show') . " " . __('Certification') }}
-@endsection
-
-@section('content')
     <section class="content container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -19,7 +14,7 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        
+
                                 <div class="form-group mb-2 mb20">
                                     <strong>Ciudad:</strong>
                                     {{ $certification->ciudad }}
@@ -42,4 +37,4 @@
             </div>
         </div>
     </section>
-@endsection
+</x-app-layout>

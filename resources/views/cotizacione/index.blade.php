@@ -1,5 +1,4 @@
 <x-app-layout>
-    <script src="https://checkout.epayco.co/checkout.js"></script>
 
     <div class="container-xxl flex-grow-1 container-p-y d-flex flex-column" style="min-height: 100vh;">
         <div class="row flex-grow-1">
