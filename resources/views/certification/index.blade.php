@@ -1,18 +1,13 @@
 <x-app-layout>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span id="card_title">
-                                {{ __('Certifications') }}
-                            </span>
-                            <div class="float-right">
-                                <a href="{{ route('certifications.create') }}" class="btn btn-primary btn-sm float-right" data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
-                            </div>
+
+    <div class="container-xxl flex-grow-1 container-p-y d-flex flex-column" style="min-height: 100vh;">
+        <div class="row flex-grow-1">
+            <div class="col-xl d-flex flex-column">
+                <div class="card flex-grow-1 d-flex flex-column">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5>Certificaciones</h5>
+                        <div>
+                            <a href="{{ route('certifications.create') }}" class="btn btn-primary btn">Crear</a>
                         </div>
                     </div>
                     @if ($message = Session::get('success'))
@@ -20,10 +15,21 @@
                             <p>{{ $message }}</p>
                         </div>
                     @endif
-                    <div class="card-body bg-white">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-hover">
-                                <thead class="thead">
+
+                    <div class="container mb-3 flex-grow-1 d-flex flex-column">
+                        <!-- Search -->
+                        <div class="navbar-nav">
+                            <div class="nav-item d-flex align-items-center">
+                                <i class="bx bx-search fs-4 lh-0"></i>
+                                <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar..."
+                                    aria-label="Search..." />
+                            </div>
+                        </div>
+                        <!-- /Search -->
+
+                        <div class="table-responsive text-nowrap flex-grow-1">
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Ciudad</th>
@@ -42,22 +48,28 @@
                                             <td>{{ $certification->barrio }}</td>
                                             <td>{{ $certification->direccion }}</td>
                                             <td>
-                                                <span class="expiration-date">{{ $certification->fecha_de_vencimiento }}</span>
+                                                <span
+                                                    class="expiration-date">{{ $certification->fecha_de_vencimiento }}</span>
                                             </td>
                                             <td>
-                                                <span class="days-remaining" data-expiration="{{ $certification->fecha_de_vencimiento }}"></span>
+                                                <span class="days-remaining"
+                                                    data-expiration="{{ $certification->fecha_de_vencimiento }}"></span>
                                             </td>
                                             <td>
-                                                <form action="{{ route('certifications.destroy', $certification->id) }}" method="POST">
-                                                    <a class="btn btn-sm btn-primary" href="{{ route('certifications.show', $certification->id) }}">
+                                                <form action="{{ route('certifications.destroy', $certification->id) }}"
+                                                    method="POST">
+                                                    <a class="btn btn-sm btn-primary"
+                                                        href="{{ route('certifications.show', $certification->id) }}">
                                                         <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
                                                     </a>
-                                                    <a class="btn btn-sm btn-success" href="{{ route('certifications.edit', $certification->id) }}">
+                                                    <a class="btn btn-sm btn-success"
+                                                        href="{{ route('certifications.edit', $certification->id) }}">
                                                         <i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}
                                                     </a>
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete?');">
+                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Are you sure to delete?');">
                                                         <i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}
                                                     </button>
                                                 </form>
@@ -69,15 +81,15 @@
                         </div>
                     </div>
                 </div>
-                {!! $certifications->links() !!}
             </div>
         </div>
+        {!! $certifications->links() !!}
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const elements = document.querySelectorAll('.days-remaining');
-            elements.forEach(function (element) {
+            elements.forEach(function(element) {
                 const expirationDate = new Date(element.getAttribute('data-expiration'));
                 const today = new Date();
                 const timeDiff = expirationDate - today;
