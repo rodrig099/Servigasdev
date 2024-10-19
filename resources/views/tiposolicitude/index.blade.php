@@ -12,7 +12,7 @@
                         </div>
                     </div>
 
-                    <div class="container mb-3 flex-grow-1 d-flex flex-column">
+                    <div class="container mb-3 text-nowrap flex-grow-1">
                         <!-- Search -->
                     <div class="navbar-nav">
                         <div class="nav-item d-flex align-items-center">
