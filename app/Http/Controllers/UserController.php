@@ -12,6 +12,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('can:Admin.users.index')->only('index');
+        $this->middleware('can:Admin.users.create')->only('create');
+        $this->middleware('can:Admin.users.edit')->only('edit');
+        $this->middleware('can:Admin.users.destroy')->only('destroy');
+
+    }
     /**
      * Display a listing of the resource.
      */

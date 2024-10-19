@@ -27,6 +27,11 @@ class RoleSeeder extends Seeder
         Permission::create(["name" => "Admin.solicitudes.edit"])->syncRoles([$role1, $role3]);
         Permission::create(["name" => "Admin.solicitudes.destroy"])->syncRoles([$role1, $role3]);
 
+        Permission::create(["name" => "Tecnico.solicitudes.index"])->syncRoles([$role1, $role2, $role3]);
+        Permission::create(["name" => "Tecnico.solicitudes.create"])->syncRoles([$role1, $role2]);
+        Permission::create(["name" => "Tecnico.solicitudes.edit"])->syncRoles([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.solicitudes.destroy"])->syncRoles([$role1, $role3]);
+
         Permission::create(["name" => "Admin.tiposolicitudes.index"])->syncRoles([$role1]);
         Permission::create(["name" => "Admin.tiposolicitudes.create"])->syncRoles([$role1]);
         Permission::create(["name" => "Admin.tiposolicitudes.edit"])->syncRoles([$role1]);
@@ -41,6 +46,29 @@ class RoleSeeder extends Seeder
         Permission::create(["name" => "Admin.cotizaciones.create"])->assignRole([$role1]);
         Permission::create(["name" => "Admin.cotizaciones.edit"])->assignRole([$role1]);
         Permission::create(["name" => "Admin.cotizaciones.destroy"])->assignRole([$role1]);
+
+        Permission::create(["name" => "Admin.users.index"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.users.create"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.users.edit"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.users.destroy"])->assignRole([$role1]);
+
+        Permission::create(["name" => "Admin.usuarios.index"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.usuarios.create"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.usuarios.edit"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.usuarios.destroy"])->assignRole([$role1]);
+
+        Permission::create(["name" => "Admin.tarjetapros.index"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.tarjetapros.create"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.tarjetapros.edit"])->assignRole([$role1]);
+        Permission::create(["name" => "Admin.tarjetapros.destroy"])->assignRole([$role1]);
+
+        Permission::create(["name" => "Tecnico.tarjetapros.index"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.tarjetapros.create"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.tarjetapros.edit"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.tarjetapros.destroy"])->assignRole([$role1, $role3]);
+
+
+
 
     }
 }

@@ -70,7 +70,8 @@ Route::middleware([
         Route::patch('/folders/{id}/rename', [FileController::class, 'renameFolder'])->name('folders.rename');
         Route::post('/files/create-folder', [FileController::class, 'createFolder'])->name('files.create.folder');
         Route::post('/files/upload/{folderName}/{subfolderName}', [FileController::class, 'uploadFile'])->name('files.upload');
-        Route::get('/files/folder/{folder_name}', [FileController::class, 'showFolderContents'])->name('files.showFolder');
+        Route::get('/files/folder/{folder_name}/{subfolder_name}', [FileController::class, 'showSubfolder'])->name('files.showSubfolder');
+
     });
 
     Route::get('/roles-permissions', function () {

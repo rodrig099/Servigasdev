@@ -12,6 +12,21 @@ use Illuminate\View\View;
 
 class TarjetaproController extends Controller
 {
+    public function __construct()
+    {
+
+        /*$this->middleware('can:Admin.tarjetapros.index')->only('index');
+        $this->middleware('can:Admin.tarjetapros.create')->only('create');
+        $this->middleware('can:Admin.tarjetapros.edit')->only('edit');
+        $this->middleware('can:Admin.tarjetapros.destroy')->only('destroy');*/
+
+        $this->middleware('can:Tecnico.tarjetapros.index')->only('index');
+        $this->middleware('can:Tecnico.tarjetapros.create')->only('create');
+        $this->middleware('can:Tecnico.tarjetapros.edit')->only('edit');
+        $this->middleware('can:Tecnico.tarjetapros.destroy')->only('destroy');
+
+
+    }
 
     /**
      * Display a listing of the resource.
