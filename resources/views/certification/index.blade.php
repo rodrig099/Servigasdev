@@ -56,23 +56,22 @@
                                                     data-expiration="{{ $certification->fecha_de_vencimiento }}"></span>
                                             </td>
                                             <td>
-                                                <form action="{{ route('certifications.destroy', $certification->id) }}"
-                                                    method="POST">
-                                                    <a class="btn btn-sm btn-primary"
-                                                        href="{{ route('certifications.show', $certification->id) }}">
-                                                        <i class="fa fa-fw fa-eye"></i> {{ __('Show') }}
-                                                    </a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('certifications.edit', $certification->id) }}">
-                                                        <i class="fa fa-fw fa-edit"></i> {{ __('Edit') }}
-                                                    </a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Are you sure to delete?');">
-                                                        <i class="fa fa-fw fa-trash"></i> {{ __('Delete') }}
+                                                <div class="dropdown">
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
-                                                </form>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item" href="{{ route('certifications.show', $certification->id) }}">
+                                                            <i class="bx bx-show-alt me-1"></i> Ver
+                                                        </a>
+                                                        <a class="dropdown-item" href="{{ route('certifications.edit', $certification->id) }}">
+                                                            <i class="bx bx-edit-alt me-1"></i> Editar
+                                                        </a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="event.preventDefault(); showDeleteModal({{ $certification->id }});">
+                                                            <i class="bx bx-trash me-1"></i> Eliminar
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -86,7 +85,45 @@
         {!! $certifications->links() !!}
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmación de eliminación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que quieres eliminar este registro?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        function showDeleteModal(certificationId) {
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'), {});
+            document.getElementById('confirmDelete').setAttribute('data-certification-id', certificationId);
+            deleteModal.show();
+        }
+
+        document.getElementById('confirmDelete').addEventListener('click', function() {
+            const certificationId = this.getAttribute('data-certification-id');
+            const form = document.createElement('form');
+            form.setAttribute('method', 'POST');
+            form.setAttribute('action', `/certifications/${certificationId}`);
+            form.innerHTML = `
+                @csrf
+                @method('DELETE')
+            `;
+            document.body.appendChild(form);
+            form.submit();
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const elements = document.querySelectorAll('.days-remaining');
             elements.forEach(function(element) {
