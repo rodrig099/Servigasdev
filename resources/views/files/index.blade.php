@@ -27,7 +27,7 @@
 
                         <div class="mb-3 text-center">
                             @if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('Tecnico') || Auth::user()->hasRole('Usuario'))
-                                <a href="{{ route('files.create') }}" class="btn btn-primary btn-lg">
+                                <a href="{{ route('files.create') }}" class="btn btn-primary ">
                                     <i class="bi bi-upload"></i> Subir Nuevo Archivo
                                 </a>
                             @endif
@@ -46,7 +46,7 @@
                         <!-- /Search -->
                     </div>
                 </div>
-                <div class="row mt-5">
+                <div class="row mt-3">
                     @foreach ($carpetas as $carpeta)
                         <div class="col-md-4">
                             <div class="card text-center mb-4 shadow-lg border-light">
