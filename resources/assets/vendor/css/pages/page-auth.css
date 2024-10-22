@@ -23,6 +23,12 @@
   max-width: 400px;
   position: relative;
 }
+
+.authentication-wrapper.authentication-basic .authentication-innere {
+    max-width: 500px;
+    position: relative;
+  }
+
 .authentication-wrapper.authentication-basic .authentication-inner:before {
   width: 148px;
   height: 148px;
