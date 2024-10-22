@@ -46,7 +46,7 @@
                                 <tbody>
                                     @foreach ($solicitudes as $solicitude)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $solicitude->id }}</td>
                                             @hasanyrole('Admin|Tecnico')
                                                 <td>{{ $solicitude->user->name }}</td>
                                             @endhasanyrole
