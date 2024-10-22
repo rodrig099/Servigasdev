@@ -85,9 +85,9 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="terms" id="terms" required />
                                         <div class="ms-2">
-                                            {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                                'terms_of_service' => '<a target="_blank" href="' . route('terms.show') . '" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">' . __('Terms of Service') . '</a>',
-                                                'privacy_policy' => '<a target="_blank" href="' . route('policy.show') . '" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">' . __('Privacy Policy') . '</a>',
+                                            {!! __('Estoy de acuerdo con los :terms_of_service y las :privacy_policy', [
+                                                'terms_of_service' => '<a target="_blank" href="' . route('terms.show') . '" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">' . __('Terminos y Condiciones') . '</a>',
+                                                'privacy_policy' => '<a target="_blank" href="' . route('policy.show') . '" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">' . __('Seguridad y Privacidad') . '</a>',
                                             ]) !!}
                                         </div>
                                     </div>
