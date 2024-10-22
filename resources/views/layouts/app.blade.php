@@ -147,9 +147,21 @@
                     </a>
                 </li>
                 <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : '' }}">
-                    <a href="{{ url('cotizaciones') }}" class="menu-link">
+                    <a href="{{ url('cotizaciones') }}" class="menu-link menu-toggle">
                         <div data-i18n="Without navbar">Cotizaciones</div>
                     </a>
+                    <ul class="menu-sub">
+                        <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : '' }}">
+                            <a href="{{ url('cotizaciones') }}" class="menu-link">
+                                <div data-i18n="Without navbar">Cotizaciones</div>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ request()->is('cotizaciones') ? 'active' : '' }}">
+                            <a href="{{ url('cotizaciones') }}" class="menu-link">
+                                <div data-i18n="Without navbar">Solicitudes</div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </li>
