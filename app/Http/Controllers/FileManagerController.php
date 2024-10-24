@@ -24,7 +24,6 @@ class FileManagerController extends Controller
 
     public function show($id)
     {
-        // Cargar la carpeta seleccionada junto con sus subcarpetas y archivos
         $folder = Folder::with('subFolders', 'files')->findOrFail($id);
         return view('file-manager.show', compact('folder'));
     }
@@ -33,13 +32,13 @@ class FileManagerController extends Controller
     {
         $request->validate(['file' => 'required|file']);  // Validación de archivo
 
-        // Almacena el archivo en el disco local, dentro de 'files'
-        $path = $request->file('file')->store('files', 'local');
+        // Almacena el archivo en el disco 'public' dentro de 'files'
+        $path = $request->file('file')->store('files', 'public');
 
         // Guarda la información del archivo en la base de datos
         File::create([
             'name' => $request->file->getClientOriginalName(),
-            'path' => $path,
+            'path' => $path,  // Esto guarda 'files/nombrearchivo.ext'
             'folder_id' => $folderId
         ]);
 
@@ -49,7 +48,7 @@ class FileManagerController extends Controller
     public function download($id)
     {
         $file = File::findOrFail($id);
-        $filePath = storage_path('app/' . $file->path); // Ruta del archivo
+        $filePath = storage_path('app/public/' . $file->path);  // Ruta correcta en 'public'
 
         if (!file_exists($filePath)) {
             return response()->json(['message' => 'El archivo no existe.'], 404);
@@ -61,7 +60,7 @@ class FileManagerController extends Controller
     public function deleteFile($id)
     {
         $file = File::findOrFail($id);
-        Storage::delete($file->path);
+        Storage::disk('public')->delete($file->path);  // Elimina el archivo del disco 'public'
         $file->delete();
         return back()->with('success', 'Archivo eliminado con éxito');
     }
@@ -70,7 +69,7 @@ class FileManagerController extends Controller
     {
         $folder = Folder::findOrFail($id);
         foreach ($folder->files as $file) {
-            Storage::delete($file->path);
+            Storage::disk('public')->delete($file->path);
             $file->delete();
         }
         foreach ($folder->subFolders as $subFolder) {
