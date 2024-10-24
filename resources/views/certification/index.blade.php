@@ -43,7 +43,10 @@
                                 <tbody>
                                     @foreach ($certifications as $certification)
                                         <tr>
-                                            <td>{{ ++$i }}</td>
+                                            <td>{{ $certification->id }}</td>
+                                            @hasanyrole('Admin|Tecnico')
+                                                <td>{{ $solicitude->user->name }}</td>
+                                            @endhasanyrole
                                             <td>{{ $certification->ciudad }}</td>
                                             <td>{{ $certification->barrio }}</td>
                                             <td>{{ $certification->direccion }}</td>
