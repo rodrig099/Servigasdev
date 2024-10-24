@@ -131,7 +131,7 @@
                 });
 
                 var data = {
-                    name: '{{ $factura->user->name }}', // Nombre del cliente (de la factura)
+                    name: $factura - > user - > name, // Nombre del cliente (de la factura)
                     description: 'Pago de factura ' + facturaId,
                     invoice: facturaId,
                     currency: 'COP',
@@ -142,10 +142,10 @@
                     lang: 'es',
                     response: 'http://127.0.0.1:8000/payment-success', // URL de respuesta
                     confirmation: 'http://127.0.0.1:8000/payment-confirmation', // URL de confirmación
-                    email_billing: '{{ $factura->user->email }}', // Email del cliente (de la factura)
-                    mobilephone_billing: '{{ $factura->user->telefono }}', // Teléfono del cliente (de la factura)
-                    address_billing: '{{ $factura->user->direccion }}', // Dirección del cliente (de la factura)
-                    number_doc_billing: '{{$factura->user->cedula}}', // Número de documento (de la factura)
+                    email_billing: $factura - > user - > email, // Email del cliente (de la factura)
+                    mobilephone_billing: $factura - > user - > telefono, // Teléfono del cliente (de la factura)
+                    address_billing: $factura - > user - > direccion, // Dirección del cliente (de la factura)
+                    number_doc_billing: $factura - > user - > cedula, // Número de documento (de la factura)
                 };
 
                 handler.open(data);

@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Folder extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'folder_name',
-        'user_id',
-    ];
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
+    protected $fillable = ['name', 'parent_id'];
 
     public function files()
     {
-        return $this->hasMany(File::class, 'folder_id');
+        return $this->hasMany(File::class);
     }
 
+    public function subFolders()
+    {
+        return $this->hasMany(Folder::class, 'parent_id');
+    }
+    public function isRoot()
+    {
+        return $this->parent_id === null;
+    }
 }

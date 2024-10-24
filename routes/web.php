@@ -12,9 +12,12 @@ use App\Http\Controllers\TarjetaproController;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\FileManagerController;
+
 use App\Http\Controllers\FileController;
-use App\Models\Cotizacione;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+//use App\Models\Cotizacione;
+//use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
@@ -62,22 +65,16 @@ Route::middleware([
 
 
     ////gestor Archivos/////
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/files', [FileController::class, 'index'])->name('files.index');
-        Route::get('/files/create', [FileController::class, 'create'])->name('files.create');
-        Route::post('/files', [FileController::class, 'store'])->name('files.store');
-        Route::get('/files/{id}/download', [FileController::class, 'download'])->name('files.download');
-        Route::delete('/files/{id}', [FileController::class, 'destroy'])->name('files.destroy');
-        Route::get('/files/folder/{folder_name}', [FileController::class, 'show'])->name('files.show');
-        Route::get('/files/{file}', [FileController::class, 'show'])->name('files.show');
-        Route::get('/files/{id}', [FileController::class, 'getFile'])->name('files.getFile');
-        Route::delete('/folders/{id}', [FileController::class, 'destroyFolder'])->name('folders.destroy');
-        Route::patch('/folders/{id}/rename', [FileController::class, 'renameFolder'])->name('folders.rename');
-        Route::post('/files/create-folder', [FileController::class, 'createFolder'])->name('files.create.folder');
-        Route::post('/files/upload/{folderName}/{subfolderName}', [FileController::class, 'uploadFile'])->name('files.upload');
-        Route::get('/files/folder/{folder_name}/{subfolder_name}', [FileController::class, 'showSubfolder'])->name('files.showSubfolder');
+    Route::get('/file-manager', [FileManagerController::class, 'index'])->name('file.manager');
+    Route::get('/folders', [FileManagerController::class, 'index'])->name('folders.index');
+    Route::post('/folders/create', [FileManagerController::class, 'createFolder'])->name('folders.create');
+    Route::post('/folders/{folderId}/upload', [FileManagerController::class, 'uploadFile'])->name('files.upload');
+    Route::get('/files/download/{id}', [FileManagerController::class, 'download'])->name('files.download');
+    Route::delete('/files/{id}', [FileManagerController::class, 'deleteFile'])->name('files.delete');
+    Route::delete('/folders/{id}', [FileManagerController::class, 'deleteFolder'])->name('folders.delete');
+    Route::get('/folders/{id}', [FileManagerController::class, 'show'])->name('folders.show');
+    Route::post('/folders/{id}/rename', [FileManagerController::class, 'renameFolder'])->name('folders.rename');
 
-    });
 
     Route::get('/roles-permissions', function () {
         $roles = Role::all();

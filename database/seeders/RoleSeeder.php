@@ -67,6 +67,15 @@ class RoleSeeder extends Seeder
         Permission::create(["name" => "Tecnico.tarjetapros.edit"])->assignRole([$role1, $role3]);
         Permission::create(["name" => "Tecnico.tarjetapros.destroy"])->assignRole([$role1, $role3]);
 
+        Permission::create(["name" => "Tecnico.cotizaciones.index"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.cotizaciones.create"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.cotizaciones.edit"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Tecnico.cotizaciones.destroy"])->assignRole([$role1, $role3]);
+
+        Permission::create(["name" => "Usuario.cotizaciones.index"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Usuario.cotizaciones.create"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Usuario.cotizaciones.edit"])->assignRole([$role1, $role3]);
+        Permission::create(["name" => "Usuario.cotizaciones.destroy"])->assignRole([$role1, $role3]);
 
 
 
