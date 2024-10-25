@@ -59,6 +59,9 @@
                                                     <a class="dropdown-item" href="{{ route('cotizaciones.show', $cotizacione->id) }}">
                                                         <i class="bx bx-show-alt me-1"></i> Ver
                                                     </a>
+                                                    <a class="dropdown-item" href="{{ route('cotizaciones.mail', $cotizacione->id) }}">
+                                                        <i class="bx bx-show-alt me-1"></i> email
+                                                    </a>
                                                     <a class="dropdown-item" href="{{ route('cotizaciones.edit', $cotizacione->id) }}">
                                                         <i class="bx bx-edit-alt me-1"></i> Editar
                                                     </a>

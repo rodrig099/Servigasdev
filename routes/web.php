@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileManagerController;
 
 use App\Http\Controllers\FileController;
+use App\Models\Cotizacione;
+
 //use App\Models\Cotizacione;
 //use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -26,6 +28,11 @@ use App\Http\Controllers\FileController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/mail', function () {
+    return view('mail');
+});
+
 
 Route::get('facturas/pdf', [FacturaController::class, 'pdf'])->name('facturas.pdf')->middleware('auth');
 
@@ -43,6 +50,7 @@ Route::middleware([
     Route::resource('facturas', FacturaController::class)->middleware('auth');
     //Cotizaciones
     Route::resource('cotizaciones', CotizacioneController::class)->middleware('auth');
+    Route::get('/cotizaciones/{cotizacione}/email', [CotizacioneController::class, 'email'])->name('cotizacione.mail')->middleware('auth');
     //Certificaciones
     Route::resource('certifications', CertificationController::class)->middleware('auth');
     Route::get('/usuarios/{user}/edit', [UsuarioController::class, 'edit'])->name('usuario.user.edit')->middleware('auth');

@@ -98,6 +98,13 @@ class CotizacioneController extends Controller
         return view('cotizacione.show', compact('cotizacione', 'users'));
     }
 
+    public function email(Cotizacione $cotizacione): View
+    {
+        $cotizacione->load('detalles');
+        $users = \App\Models\User::all();
+        return view('cotizacione.mail', compact('cotizacione', 'users'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
